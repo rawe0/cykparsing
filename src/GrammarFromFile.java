@@ -62,8 +62,14 @@ public class GrammarFromFile extends Grammar{
                 terminalRules[index] = outputOne;
             }
         }
+        System.out.println(Arrays.toString(nonTerminalRules));
         for (int i = 0; i < nonTerminalRules.length; i++) {
             System.out.println(Arrays.toString(nonTerminalRules[i]));
+
+            for (int j = 0; j < nonTerminalRules[i].length; j++) {
+                System.out.println(nonTerminalRules[i][j][0]);
+                System.out.println(nonTerminalRules[i][j][1]);
+            }
         }
         System.out.println(Arrays.toString(terminalRules));
 
