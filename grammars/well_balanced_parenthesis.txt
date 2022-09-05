@@ -1,6 +1,7 @@
 S SS
 S LA
 S LR
+S R
 A SR
 L (
 R )

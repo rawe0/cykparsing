@@ -8,8 +8,10 @@ public class GrammarFromFile extends Grammar{
     int [][][] nonTerminalToNonTerminals;
     char [] nonTerminalToTerminal;
 
-    HashMap<Integer, Integer> nonTerminalIndexMap;
+    int [][][] nonTerminalsToNonTerminal;
+    HashMap<Character, ArrayList<Integer>> terminalToNonTerminals;
 
+    HashMap<Integer, Integer> nonTerminalIndexMap;
     ArrayList<String> rules;
     int ruleCount = 0;
 
@@ -46,15 +48,20 @@ public class GrammarFromFile extends Grammar{
             if(Character.isUpperCase(outputOne)){
 
                 int inputValue = (int) inputOne;
-                char outputTwo = split[1].charAt(1);
-                int outputValueTwo = (int) outputOne;
-                int outputValueOne = (int) outputTwo;
-
+                int outputValueOne = (int) outputOne;
                 int index = nonTerminalIndexMap.get(inputValue);
-
                 nonTerminalToNonTerminals[index] = Arrays.copyOf(nonTerminalToNonTerminals[index],
                         nonTerminalToNonTerminals[index].length + 1);
-                nonTerminalToNonTerminals[index][nonTerminalToNonTerminals[index].length - 1] = new int[] {nonTerminalIndexMap.get(outputValueOne), nonTerminalIndexMap.get(outputValueTwo)};
+
+                if (split[1].length() == 2){
+                    char outputTwo = split[1].charAt(1);
+                    int outputValueTwo = (int) outputTwo;
+                    nonTerminalToNonTerminals[index][nonTerminalToNonTerminals[index].length - 1] = new int[]
+                            {nonTerminalIndexMap.get(outputValueOne), nonTerminalIndexMap.get(outputValueTwo)};
+                } else {
+                    nonTerminalToNonTerminals[index][nonTerminalToNonTerminals[index].length - 1] =
+                            new int[] {nonTerminalIndexMap.get(outputValueOne)};
+                }
 
             // Terminal rule
             } else {
@@ -68,7 +75,12 @@ public class GrammarFromFile extends Grammar{
             System.out.println(Arrays.toString(nonTerminalToNonTerminals[i]));
 
             for (int j = 0; j < nonTerminalToNonTerminals[i].length; j++) {
-                System.out.println(nonTerminalToNonTerminals[i][j][0] + " : " + nonTerminalToNonTerminals[i][j][1]);
+                if(nonTerminalToNonTerminals[i][j].length == 2){
+                    System.out.println(nonTerminalToNonTerminals[i][j][0] + " : " + nonTerminalToNonTerminals[i][j][1]);
+                }else{
+                    System.out.println(nonTerminalToNonTerminals[i][j][0] + " : ");
+                }
+
             }
         }
         System.out.println(Arrays.toString(nonTerminalToTerminal));
