@@ -5,8 +5,9 @@ import java.util.Scanner;
 
 public class GrammarFromFile extends Grammar{
 
-    int [][][] nonTerminalRules;
-    char [] terminalRules;
+    int [][][] nonTerminalToNonTerminals;
+    char [] nonTerminalToTerminal;
+
     HashMap<Integer, Integer> nonTerminalIndexMap;
 
     ArrayList<String> rules;
@@ -32,8 +33,8 @@ public class GrammarFromFile extends Grammar{
             }
             rules.add(data);
         }
-        nonTerminalRules = new int[ruleCount][0][0];
-        terminalRules = new char[ruleCount];
+        nonTerminalToNonTerminals = new int[ruleCount][0][0];
+        nonTerminalToTerminal = new char[ruleCount];
 
         for (String rule : rules) {
             String [] split = rule.split("\\s+");
@@ -51,27 +52,26 @@ public class GrammarFromFile extends Grammar{
 
                 int index = nonTerminalIndexMap.get(inputValue);
 
-                nonTerminalRules[index] = Arrays.copyOf(nonTerminalRules[index],
-                        nonTerminalRules[index].length + 1);
-                nonTerminalRules[index][nonTerminalRules[index].length - 1] = new int[] {nonTerminalIndexMap.get(outputValueOne), nonTerminalIndexMap.get(outputValueTwo)};
+                nonTerminalToNonTerminals[index] = Arrays.copyOf(nonTerminalToNonTerminals[index],
+                        nonTerminalToNonTerminals[index].length + 1);
+                nonTerminalToNonTerminals[index][nonTerminalToNonTerminals[index].length - 1] = new int[] {nonTerminalIndexMap.get(outputValueOne), nonTerminalIndexMap.get(outputValueTwo)};
 
             // Terminal rule
             } else {
                 int inputValue = (int) inputOne;
                 int index = nonTerminalIndexMap.get(inputValue);
-                terminalRules[index] = outputOne;
+                nonTerminalToTerminal[index] = outputOne;
             }
         }
-        System.out.println(Arrays.toString(nonTerminalRules));
-        for (int i = 0; i < nonTerminalRules.length; i++) {
-            System.out.println(Arrays.toString(nonTerminalRules[i]));
+        System.out.println(Arrays.toString(nonTerminalToNonTerminals));
+        for (int i = 0; i < nonTerminalToNonTerminals.length; i++) {
+            System.out.println(Arrays.toString(nonTerminalToNonTerminals[i]));
 
-            for (int j = 0; j < nonTerminalRules[i].length; j++) {
-                System.out.println(nonTerminalRules[i][j][0]);
-                System.out.println(nonTerminalRules[i][j][1]);
+            for (int j = 0; j < nonTerminalToNonTerminals[i].length; j++) {
+                System.out.println(nonTerminalToNonTerminals[i][j][0] + " : " + nonTerminalToNonTerminals[i][j][1]);
             }
         }
-        System.out.println(Arrays.toString(terminalRules));
+        System.out.println(Arrays.toString(nonTerminalToTerminal));
 
     }
 

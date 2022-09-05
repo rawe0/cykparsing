@@ -1,12 +1,12 @@
 public class Parser {
 
-    public boolean ParseNaive(String s) {
+    public boolean ParseNaive(String s, Grammar g) {
         return true;
     }
-    public boolean ParseBU(String s) {
-        return true;
+    public boolean ParseBU(String s, Grammar g) {
+
     }
-    public boolean parseTD(String s) {
+    public boolean parseTD(String s, Grammar g) {
         return true;
     }
 }
