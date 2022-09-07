@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 
 public class Main {
+
     public static void main(String[] args) {
         if (args.length == 0){
 
@@ -12,7 +13,11 @@ public class Main {
             try {
                 File myObj = new File(args[0]);
                 Scanner myReader = new Scanner(myObj);
+                String randomString = "((()()()(()))()()())";
                 GrammarFromFile grammar = new GrammarFromFile(myReader);
+                Parser parser = new Parser();
+                System.out.println(parser.ParseBU(randomString, grammar));
+
 
                 myReader.close();
             } catch (FileNotFoundException e) {

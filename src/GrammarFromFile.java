@@ -6,21 +6,23 @@ import java.util.Scanner;
 public class GrammarFromFile extends Grammar{
 
     int [][][] nonTerminalToNonTerminals;
-    char [] nonTerminalToTerminal;
+    char [] tFromN;
 
-    int [][][] nonTerminalsToNonTerminal;
-    HashMap<Character, ArrayList<Integer>> terminalToNonTerminals;
+    int [][] nonTerminalsToNonTerminal;
+    HashMap<Character, ArrayList<Integer>> nFromT;
 
     HashMap<Integer, Integer> nonTerminalIndexMap;
     ArrayList<String> rules;
-    int ruleCount = 0;
+    public int ruleCount;
 
 
 
 
     public GrammarFromFile(Scanner input) {
+        ruleCount = 1;
         rules = new ArrayList<>();
         nonTerminalIndexMap = new HashMap<>();
+        nFromT = new HashMap<>();
 
 
         while (input.hasNextLine()) {
@@ -36,7 +38,8 @@ public class GrammarFromFile extends Grammar{
             rules.add(data);
         }
         nonTerminalToNonTerminals = new int[ruleCount][0][0];
-        nonTerminalToTerminal = new char[ruleCount];
+        tFromN = new char[ruleCount];
+        nonTerminalsToNonTerminal = new int[ruleCount][ruleCount];
 
         for (String rule : rules) {
             String [] split = rule.split("\\s+");
@@ -47,53 +50,64 @@ public class GrammarFromFile extends Grammar{
             // Non-terminal rule
             if(Character.isUpperCase(outputOne)){
 
-                int inputValue = (int) inputOne;
-                int outputValueOne = (int) outputOne;
-                int index = nonTerminalIndexMap.get(inputValue);
+                int index = nonTerminalIndexMap.get((int) inputOne);
                 nonTerminalToNonTerminals[index] = Arrays.copyOf(nonTerminalToNonTerminals[index],
                         nonTerminalToNonTerminals[index].length + 1);
 
                 if (split[1].length() == 2){
                     char outputTwo = split[1].charAt(1);
-                    int outputValueTwo = (int) outputTwo;
                     nonTerminalToNonTerminals[index][nonTerminalToNonTerminals[index].length - 1] = new int[]
-                            {nonTerminalIndexMap.get(outputValueOne), nonTerminalIndexMap.get(outputValueTwo)};
+                            {nonTerminalIndexMap.get((int) outputOne), nonTerminalIndexMap.get((int) outputTwo)};
+
+                    nonTerminalsToNonTerminal[nonTerminalIndexMap.get((int) outputOne)][nonTerminalIndexMap.get((int) outputTwo)] = index;
                 } else {
+                    nonTerminalsToNonTerminal[nonTerminalIndexMap.get((int) outputOne)][0] = index;
                     nonTerminalToNonTerminals[index][nonTerminalToNonTerminals[index].length - 1] =
-                            new int[] {nonTerminalIndexMap.get(outputValueOne)};
+                            new int[] {nonTerminalIndexMap.get((int) outputOne)};
                 }
 
             // Terminal rule
             } else {
-                int inputValue = (int) inputOne;
-                int index = nonTerminalIndexMap.get(inputValue);
-                nonTerminalToTerminal[index] = outputOne;
+                int index = nonTerminalIndexMap.get((int) inputOne);
+                tFromN[index] = outputOne;
             }
         }
-        System.out.println(Arrays.toString(nonTerminalToNonTerminals));
-        for (int i = 0; i < nonTerminalToNonTerminals.length; i++) {
-            System.out.println(Arrays.toString(nonTerminalToNonTerminals[i]));
 
-            for (int j = 0; j < nonTerminalToNonTerminals[i].length; j++) {
-                if(nonTerminalToNonTerminals[i][j].length == 2){
-                    System.out.println(nonTerminalToNonTerminals[i][j][0] + " : " + nonTerminalToNonTerminals[i][j][1]);
-                }else{
-                    System.out.println(nonTerminalToNonTerminals[i][j][0] + " : ");
-                }
-
-            }
+        // Create the reverse mapping for terminals
+        for (int i = 0; i < tFromN.length; i++) {
+            ArrayList<Integer> nRules = nFromT.computeIfAbsent(tFromN[i], k -> new ArrayList<>());
+            nRules.add(i);
         }
-        System.out.println(Arrays.toString(nonTerminalToTerminal));
+        System.out.println(Arrays.toString(tFromN));
 
     }
 
     @Override
-    public char getTerminalRule() {
-        return 0;
+    public char getTRuleFromNRule(int nRule) {
+        return tFromN[nRule];
+    }
+
+    public int getRuleCount(){
+        return ruleCount;
     }
 
     @Override
-    public int getNonTerminalRule() {
-        return 0;
+    public ArrayList<Integer> getNRulesFromTRule(char tRule) {
+        return nFromT.get(tRule);
+    }
+
+    @Override
+    public int[][] getArraysFromNRule(int nRule) {
+        return nonTerminalToNonTerminals[nRule];
+    }
+
+    @Override
+    // Will return 0 if not found.
+    public int getRuleFromArray(int[] array) {
+        if(array.length == 2) {
+            return nonTerminalsToNonTerminal[array[0]][array[1]];
+        }else {
+            return nonTerminalsToNonTerminal[array[0]][0];
+        }
     }
 }
