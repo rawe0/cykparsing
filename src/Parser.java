@@ -15,7 +15,7 @@ public class Parser {
             }
         }
         for (int a = 1; a < n; a++){
-            for (int b = 0; b < n-a+1; b++){
+            for (int b = 0; b < n-a; b++){
                 for (int c = 1; c < a-1; c++){
                     for (int j = 0; j < ruleCount; j++) {
                         int[][] rules = g.getArraysFromNRule(j);
