@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 public class Parser {
 
     public boolean ParseNaive(String s, Grammar g) {
@@ -11,24 +13,30 @@ public class Parser {
 
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < ruleCount; j++) {
-                cykTable[i][i][j] = g.getNRulesFromTRule(s.charAt(i)).contains(j);
+                cykTable[0][i][j] = g.getNRulesFromTRule(s.charAt(i)).contains(j);
             }
         }
         for (int a = 1; a < n; a++){
             for (int b = 0; b < n-a; b++){
-                for (int c = 1; c < a-1; c++){
-                    for (int j = 0; j < ruleCount; j++) {
+                for (int c = 0; c < a; c++){
+                    int leftIndex = a - c - 1;
+                    int rightIndex = b + c + 1;
+                    boolean[] leftCell = cykTable[c][b];
+                    boolean[] rightCell = cykTable[leftIndex][rightIndex];
+                    for (int j = 1; j < ruleCount; j++) {
                         int[][] rules = g.getArraysFromNRule(j);
+                        System.out.println(Arrays.toString(rules));
                         for (int[] rule: rules) {
-                            if (cykTable[c][b][rule[0]] && cykTable[a - c][b + c][rule[1]]) {
-                                cykTable[a][b][j] = true;
-                                break;
-                            }
+
                         }
                     }
                 }
             }
         }
+        for (boolean[] array: cykTable[2]) {
+            System.out.println(Arrays.toString(array));
+        }
+
         return true;
     }
     public boolean parseTD(String s, Grammar g) {

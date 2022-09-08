@@ -13,7 +13,7 @@ public class Main {
             try {
                 File myObj = new File(args[0]);
                 Scanner myReader = new Scanner(myObj);
-                String randomString = "((()()()(()))()()())";
+                String randomString = "()()()";
                 GrammarFromFile grammar = new GrammarFromFile(myReader);
                 Parser parser = new Parser();
                 System.out.println(parser.ParseBU(randomString, grammar));
