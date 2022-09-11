@@ -1,4 +1,4 @@
-import java.util.Arrays;
+import java.util.ArrayList;
 
 public class Parser {
 
@@ -12,8 +12,12 @@ public class Parser {
         boolean[][][] cykTable = new boolean[n][n][ruleCount];
 
         for (int i = 0; i < n; i++) {
-            for (int j = 0; j < ruleCount; j++) {
-                cykTable[0][i][j] = g.getNRulesFromTRule(s.charAt(i)).contains(j);
+            char c = s.charAt(i);
+            ArrayList<Integer> rules = g.getNRulesFromTRule(c);
+            if (rules != null) {
+                for (int rule : rules) {
+                    cykTable[0][i][rule] = true;
+                }
             }
         }
         for (int a = 1; a < n; a++){
@@ -25,19 +29,24 @@ public class Parser {
                     boolean[] rightCell = cykTable[leftIndex][rightIndex];
                     for (int j = 1; j < ruleCount; j++) {
                         int[][] rules = g.getArraysFromNRule(j);
-                        System.out.println(Arrays.toString(rules));
                         for (int[] rule: rules) {
-
+                            if (leftCell[rule[0]] && rightCell[rule[1]]) {
+                                cykTable[a][b][j] = true;
+                                break;
+                            }
                         }
                     }
                 }
             }
         }
-        for (boolean[] array: cykTable[2]) {
-            System.out.println(Arrays.toString(array));
+        // Make the assumption that the start symbol is the
+        // first symbol in the grammar
+        for (int i = 0; i < n; i++) {
+            if(cykTable[n-1][0][1]){
+                return true;
+            }
         }
-
-        return true;
+        return false;
     }
     public boolean parseTD(String s, Grammar g) {
         return true;

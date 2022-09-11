@@ -78,8 +78,6 @@ public class GrammarFromFile extends Grammar{
             ArrayList<Integer> nRules = nFromT.computeIfAbsent(tFromN[i], k -> new ArrayList<>());
             nRules.add(i);
         }
-        System.out.println(Arrays.toString(tFromN));
-
     }
 
     @Override
