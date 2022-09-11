@@ -108,4 +108,7 @@ public class GrammarFromFile extends Grammar{
             return nonTerminalsToNonTerminal[array[0]][0];
         }
     }
+    public int[][][] getGrammar(){
+        return nonTerminalToNonTerminals;
+    }
 }

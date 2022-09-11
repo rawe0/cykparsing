@@ -2,10 +2,39 @@ import java.util.ArrayList;
 
 public class Parser {
 
-    public boolean ParseNaive(String s, Grammar g) {
+    public boolean parseNaive(String s, Grammar g) {
+        int n = s.length();
+        int[] str = new int[n];
+
+        for (int i = 0; i < n; i++) {
+            char c = s.charAt(i);
+            ArrayList<Integer> rules = g.getNRulesFromTRule(c);
+            if (rules != null) {
+                for (int rule : rules) {
+                    str[i] = rule;
+                }
+            }
+        }
+
+        return parseNaive(1, 0 , str.length, g, str);
+
+    }
+    public boolean parseNaive(int nonTerminal, int start, int end, Grammar g, int [] s){
+        int[][][] grammar = g.getGrammar();
+        if(start == end - 1){
+            int[][] rules = g.getArraysFromNRule(nonTerminal);
+            for(int i = 0; i < rules.length; i++){
+                int [] rule = rules[i];
+
+            }
+
+        }
+
+
         return true;
     }
-    public boolean ParseBU(String s, Grammar g) {
+
+    public boolean parseBU(String s, Grammar g) {
 
         int n = s.length();
         int ruleCount = g.getRuleCount();

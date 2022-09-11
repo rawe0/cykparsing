@@ -7,5 +7,6 @@ public abstract class Grammar {
     public abstract int [][] getArraysFromNRule(int nRule);
     public abstract int getRuleFromArray(int [] array);
     public abstract int getRuleCount();
+    public abstract int[][][] getGrammar();
 
-}
+    }
