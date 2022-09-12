@@ -16,10 +16,34 @@ public class Main {
                 String randomString = "()";
                 GrammarFromFile grammar = new GrammarFromFile(myReader);
                 Parser parser = new Parser();
-                System.out.println(parser.parseTD(randomString, grammar));
 
+                int[] counter = {0};
+
+                long startTime = System.nanoTime();
+                System.out.println(parser.parseNaive(randomString, grammar, counter));
+                long endTime   = System.nanoTime();
+                long totalTime = endTime - startTime;
+                System.out.println("time: " + totalTime);
+                System.out.println("count: " + counter[0] + "\n");
+
+                counter[0] = 0;
+                startTime = System.nanoTime();
+                System.out.println(parser.parseTD(randomString, grammar, counter));
+                endTime   = System.nanoTime();
+                totalTime = endTime - startTime;
+                System.out.println("time: " + totalTime);
+                System.out.println("count: " + counter[0] + "\n");
+
+                counter[0] = 0;
+                startTime = System.nanoTime();
+                System.out.println(parser.parseBU(randomString, grammar, counter));
+                endTime   = System.nanoTime();
+                totalTime = endTime - startTime;
+                System.out.println("time: " + totalTime);
+                System.out.println("count: " + counter[0] + "\n");
 
                 myReader.close();
+
             } catch (FileNotFoundException e) {
                 System.out.println("An error occurred.");
                 e.printStackTrace();

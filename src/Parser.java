@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class Parser {
 
-    public boolean parseBU(String s, Grammar g) {
+    public boolean parseBU(String s, Grammar g, int[] counter) {
 
         int n = s.length();
         int ruleCount = g.getRuleCount();
@@ -27,6 +27,7 @@ public class Parser {
                     for (int j = 1; j < ruleCount; j++) {
                         int[][] rules = g.getArraysFromNRule(j);
                         for (int[] rule: rules) {
+                            counter[0]++;
                             if (leftCell[rule[0]] && rightCell[rule[1]]) {
                                 cykTable[a][b][j] = true;
                                 break;
@@ -45,11 +46,11 @@ public class Parser {
         }
         return false;
     }
-    public boolean parseTD(String s, Grammar g) {
+    public boolean parseTD(String s, Grammar g, int[] counter) {
         int n = s.length();
         char [] string = s.toCharArray();
         int ruleCount = g.getRuleCount();
-        Boolean[][][] table = new Boolean[ruleCount][n][n];
+        Boolean[][][] table = new Boolean[ruleCount][n+1][n+1];
         for(int i = 0; i < ruleCount; i++){
             for(int j = 0; j < n; j++){
                 for(int k = 0; k < n; k++){
@@ -58,11 +59,10 @@ public class Parser {
             }
         }
         // Assume that the first NON-TERMINAL is the start symbol
-        return parseTD(1, 0, n, g, string, table);
-
-
+        return parseTD(1, 0, n, g, string, table, counter);
     }
-    public boolean parseTD(int nonTerminal, int start, int end, Grammar g, char [] s, Boolean[][][] table){
+    public boolean parseTD(int nonTerminal, int start, int end, Grammar g, char [] s, Boolean[][][] table, int[] counter){
+        counter[0]++;
         if(start == end - 1){
             ArrayList<Integer> rules = g.getNRulesFromTRule(s[start]);
             for (int rule : rules) {
@@ -74,38 +74,32 @@ public class Parser {
         else{
             int [][] rules = g.getArraysFromNRule(nonTerminal);
             for (int[] rule : rules) {
-                for (int i = start; i < end; i++) {
+                for (int i = start + 1; i < end; i++) {
 
                     if(table[rule[0]][start][i] == null){
-                        table[rule[0]][start][i] = parseTD(rule[0], start, i, g, s, table);
-                        if(table[rule[0]][start][i] && table[rule[1]][i][end] == null){
-                            table[rule[1]][i][end] = parseTD(rule[1], i, end, g, s, table);
-                        }
+                        table[rule[0]][start][i] = parseTD(rule[0], start, i, g, s, table, counter);
                     }
 
-                    if(table[rule[0]][start][i] && table[rule[1]][i][end] != null){
-                        if(table[rule[1]][i][end]){
+                    if(table[rule[1]][i][end] == null){
+                        table[rule[1]][i][end] = parseTD(rule[1], i, end, g, s, table, counter);
+                    }
+
+                    if(table[rule[0]][start][i] && table[rule[1]][i][end]){
                             return true;
-                        }
                     }
-                    /*
-                    if( parseTD(rule[0], start, i, g, s, table) && parseTD(rule[1], i, end, g, s, table)){
-                        return true;
-                    }
-                    */
                 }
             }
         }
         return false;
     }
-    public boolean parseNaive(String s, Grammar g) {
+    public boolean parseNaive(String s, Grammar g, int[] counter) {
         int n = s.length();
         char [] string = s.toCharArray();
         // Assume that the first NON-TERMINAL is the start symbol
-        return parseNaive(1, 0 , n, g, string);
-
+        return parseNaive(1, 0 , n, g, string, counter);
     }
-    public boolean parseNaive(int nonTerminal, int start, int end, Grammar g, char [] s){
+    public boolean parseNaive(int nonTerminal, int start, int end, Grammar g, char [] s, int[] counter){
+        counter[0]++;
         if(start == end - 1){
             ArrayList<Integer> rules = g.getNRulesFromTRule(s[start]);
             for (int rule : rules) {
@@ -117,8 +111,8 @@ public class Parser {
         else{
             int [][] rules = g.getArraysFromNRule(nonTerminal);
             for (int[] rule : rules) {
-                for (int i = start; i < end; i++) {
-                    if (parseNaive(rule[0], start, i, g, s) && parseNaive(rule[1], i, end, g, s)) {
+                for (int i = start + 1; i < end; i++) {
+                    if (parseNaive(rule[0], start, i, g, s, counter) && parseNaive(rule[1], i, end, g, s, counter)) {
                         return true;
                     }
                 }
@@ -126,6 +120,5 @@ public class Parser {
         }
         return false;
     }
-
 }
 
