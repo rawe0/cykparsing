@@ -2,38 +2,6 @@ import java.util.ArrayList;
 
 public class Parser {
 
-    public boolean parseNaive(String s, Grammar g) {
-        int n = s.length();
-        int[] str = new int[n];
-
-        for (int i = 0; i < n; i++) {
-            char c = s.charAt(i);
-            ArrayList<Integer> rules = g.getNRulesFromTRule(c);
-            if (rules != null) {
-                for (int rule : rules) {
-                    str[i] = rule;
-                }
-            }
-        }
-
-        return parseNaive(1, 0 , str.length, g, str);
-
-    }
-    public boolean parseNaive(int nonTerminal, int start, int end, Grammar g, int [] s){
-        int[][][] grammar = g.getGrammar();
-        if(start == end - 1){
-            int[][] rules = g.getArraysFromNRule(nonTerminal);
-            for(int i = 0; i < rules.length; i++){
-                int [] rule = rules[i];
-
-            }
-
-        }
-
-
-        return true;
-    }
-
     public boolean parseBU(String s, Grammar g) {
 
         int n = s.length();
@@ -78,7 +46,86 @@ public class Parser {
         return false;
     }
     public boolean parseTD(String s, Grammar g) {
-        return true;
+        int n = s.length();
+        char [] string = s.toCharArray();
+        int ruleCount = g.getRuleCount();
+        Boolean[][][] table = new Boolean[ruleCount][n][n];
+        for(int i = 0; i < ruleCount; i++){
+            for(int j = 0; j < n; j++){
+                for(int k = 0; k < n; k++){
+                    table[i][j][k] = null;
+                }
+            }
+        }
+        // Assume that the first NON-TERMINAL is the start symbol
+        return parseTD(1, 0, n, g, string, table);
+
+
     }
+    public boolean parseTD(int nonTerminal, int start, int end, Grammar g, char [] s, Boolean[][][] table){
+        if(start == end - 1){
+            ArrayList<Integer> rules = g.getNRulesFromTRule(s[start]);
+            for (int rule : rules) {
+                if (rule == nonTerminal) {
+                    return true;
+                }
+            }
+        }
+        else{
+            int [][] rules = g.getArraysFromNRule(nonTerminal);
+            for (int[] rule : rules) {
+                for (int i = start; i < end; i++) {
+
+                    if(table[rule[0]][start][i] == null){
+                        table[rule[0]][start][i] = parseTD(rule[0], start, i, g, s, table);
+                        if(table[rule[0]][start][i] && table[rule[1]][i][end] == null){
+                            table[rule[1]][i][end] = parseTD(rule[1], i, end, g, s, table);
+                        }
+                    }
+
+                    if(table[rule[0]][start][i] && table[rule[1]][i][end] != null){
+                        if(table[rule[1]][i][end]){
+                            return true;
+                        }
+                    }
+                    /*
+                    if( parseTD(rule[0], start, i, g, s, table) && parseTD(rule[1], i, end, g, s, table)){
+                        return true;
+                    }
+                    */
+                }
+            }
+        }
+        return false;
+    }
+    public boolean parseNaive(String s, Grammar g) {
+        int n = s.length();
+        char [] string = s.toCharArray();
+        // Assume that the first NON-TERMINAL is the start symbol
+        return parseNaive(1, 0 , n, g, string);
+
+    }
+    public boolean parseNaive(int nonTerminal, int start, int end, Grammar g, char [] s){
+        if(start == end - 1){
+            ArrayList<Integer> rules = g.getNRulesFromTRule(s[start]);
+            for (int rule : rules) {
+                if (rule == nonTerminal) {
+                    return true;
+                }
+            }
+        }
+        else{
+            int [][] rules = g.getArraysFromNRule(nonTerminal);
+            for (int[] rule : rules) {
+                for (int i = start; i < end; i++) {
+                    if (parseNaive(rule[0], start, i, g, s) && parseNaive(rule[1], i, end, g, s)) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
 }
 
