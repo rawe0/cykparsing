@@ -13,12 +13,11 @@ public class Main {
             try {
                 File myObj = new File(args[0]);
                 Scanner myReader = new Scanner(myObj);
-                String randomString = ")()()()()()";
                 GrammarFromFile grammar = new GrammarFromFile(myReader);
                 Parser parser = new Parser();
 
                 int[] counter = {0};
-
+                String randomString = "(()()()())";
                 long startTime = System.nanoTime();
                 System.out.println(parser.parseNaive(randomString, grammar, counter));
                 long endTime   = System.nanoTime();
@@ -35,13 +34,15 @@ public class Main {
                     stupidGrammarStrings[i] = generateString(3, i);
                 }
 
-                counter[0] = 0;
-                startTime = System.nanoTime();
-                System.out.println(parser.parseTD(randomString, grammar, counter));
-                endTime   = System.nanoTime();
-                totalTime = endTime - startTime;
-                System.out.println("time: " + totalTime);
-                System.out.println("count: " + counter[0] + "\n");
+                for(int i = 0; i < 5; i++){
+                    counter[0] = 0;
+                    startTime = System.nanoTime();
+                    System.out.println(parser.parseTD(randomString, grammar, counter));
+                    endTime   = System.nanoTime();
+                    totalTime = endTime - startTime;
+                    System.out.println("time: " + totalTime);
+                    System.out.println("count: " + counter[0] + "\n");
+                }
 
 
                 counter[0] = 0;
