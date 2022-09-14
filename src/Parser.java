@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class Parser {
 
-    public boolean parseBU(String s, Grammar g, int[] counter) {
+    public boolean parseBU(String s, Grammar g, long[] counter) {
 
         int n = s.length();
         int ruleCount = g.getRuleCount();
@@ -46,7 +46,7 @@ public class Parser {
         }
         return false;
     }
-    public boolean parseTD(String s, Grammar g, int[] counter) {
+    public boolean parseTD(String s, Grammar g, long[] counter) {
         int n = s.length();
         char [] string = s.toCharArray();
         int ruleCount = g.getRuleCount();
@@ -61,7 +61,7 @@ public class Parser {
         // Assume that the first NON-TERMINAL is the start symbol
         return parseTD(1, 0, n, g, string, table, counter);
     }
-    public boolean parseTD(int nonTerminal, int start, int end, Grammar g, char [] s, Boolean[][][] table, int[] counter){
+    public boolean parseTD(int nonTerminal, int start, int end, Grammar g, char [] s, Boolean[][][] table, long[] counter){
         counter[0]++;
         if(start == end - 1){
             ArrayList<Integer> rules = g.getNRulesFromTRule(s[start]);
@@ -92,13 +92,13 @@ public class Parser {
         }
         return false;
     }
-    public boolean parseNaive(String s, Grammar g, int[] counter) {
+    public boolean parseNaive(String s, Grammar g, long[] counter) {
         int n = s.length();
         char [] string = s.toCharArray();
         // Assume that the first NON-TERMINAL is the start symbol
         return parseNaive(1, 0 , n, g, string, counter);
     }
-    public boolean parseNaive(int nonTerminal, int start, int end, Grammar g, char [] s, int[] counter){
+    public boolean parseNaive(int nonTerminal, int start, int end, Grammar g, char [] s, long[] counter){
         counter[0]++;
         if(start == end - 1){
             ArrayList<Integer> rules = g.getNRulesFromTRule(s[start]);
