@@ -6,6 +6,9 @@ import java.util.Scanner;
 
 public class Main {
 
+    public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_RED = "\u001B[31m";
+    public static final String ANSI_GREEN = "\u001B[32m";
     public static void main(String[] args) throws IOException {
 
         if (args.length == 0) {
@@ -47,8 +50,8 @@ public class Main {
         String[] COCStrings = new String[nLengths];
         String[] OOCStrings = new String[nLengths];
 
-        File SGFile = new File("grammars/well_balanced_parenthesis.txt");
-        File WPBFile = new File("grammars/stupid.txt");
+        File SGFile = new File("grammars/stupid.txt");
+        File WPBFile = new File("grammars/well_balanced_parenthesis.txt");
         Scanner SGReader = new Scanner(SGFile);
         Scanner WPBReader = new Scanner(WPBFile);
 
@@ -71,8 +74,7 @@ public class Main {
         }
 
         String[] testCases = {"BU_OC", "BU_OO", "BU_COC", "BU_OOC", "BU_SG",
-                             "TD_OC", "TD_OO", "TD_COC", "TD_OOC", "TU_SG"};
-
+                             "TD_OC", "TD_OO", "TD_COC", "TD_OOC", "TD_SG"};
         // Run each testCases
         for (String testCase: testCases) {
             String[][] result = new String[0][];
@@ -158,13 +160,14 @@ public class Main {
         String [][] result = new String[nLengths][nRuns];
 
         System.out.println("Method: " + parseMethod + " Max length: " +
-                ((nLengths + 1)*100) + " Number of runs: " + nRuns);
+                ((nLengths)*100) + " Number of runs: " + nRuns);
 
         for(int l = 0; l < nLengths; l++){
 
             // Dry run
-            System.out.println("    Dry run for length: " + nLengths);
+            System.out.println("    Dry run for length: " + (l+1)*100);
             counter[0] = 0;
+
 
             if(parseMethod.equals("BU")){
                 parser.parseBU(testStrings[l], g, counter);
@@ -175,6 +178,8 @@ public class Main {
             // Real runs
             for(int i = 0; i < nRuns; i++){
 
+                boolean wasParsed = true;
+
                 System.out.println("        Run: " + i + "...");
                 // Reset counter and start time
                 counter[0] = 0;
@@ -182,9 +187,9 @@ public class Main {
 
                 // Parse grammar
                 if(parseMethod.equals("BU")){
-                    parser.parseBU(testStrings[l], g, counter);
+                    wasParsed = parser.parseBU(testStrings[l], g, counter);
                 } else if (parseMethod.equals("TD")){
-                    parser.parseTD(testStrings[l], g, counter);
+                    wasParsed = parser.parseTD(testStrings[l], g, counter);
                 }
 
                 // Calculate time
@@ -193,7 +198,11 @@ public class Main {
 
                 // Store result
                 result[l][i] = String.format("%d, %d", totalTime, counter[0]);
-                System.out.println("        Time, Counter: " + result[l][i]);
+                if(wasParsed){
+                    System.out.println(ANSI_GREEN + "        Time, Counter: " + result[l][i] + ANSI_RESET);
+                }else{
+                    System.out.println(ANSI_RED + "        Time, Counter: " + result[l][i] + ANSI_RESET);
+                }
             }
 
         }
