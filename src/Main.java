@@ -1,6 +1,7 @@
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Scanner;
 
 
@@ -50,9 +51,12 @@ public class Main {
         String[] COCStrings = new String[nLengths];
         String[] OOCStrings = new String[nLengths];
 
-        File SGFile = new File("grammars/stupid.txt");
-        File WPBFile = new File("grammars/well_balanced_parenthesis.txt");
+        InputStream SGFile = Main.class.getClassLoader().getResourceAsStream("stupid.txt");
+        InputStream WPBFile = Main.class.getClassLoader().getResourceAsStream("well_balanced_parenthesis.txt");
+
+        assert SGFile != null;
         Scanner SGReader = new Scanner(SGFile);
+        assert WPBFile != null;
         Scanner WPBReader = new Scanner(WPBFile);
 
         GrammarFromFile balancedParenthesis = new GrammarFromFile(WPBReader);
