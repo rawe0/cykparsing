@@ -1,46 +1,53 @@
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class Parser {
 
     public boolean parseBU(String s, Grammar g, long[] counter) {
 
+        int [][] nonTerminalsToNonTerminals = g.getRuleFromArray();
+
         int n = s.length();
-        int ruleCount = g.getRuleCount();
-        boolean[][][] cykTable = new boolean[n][n][ruleCount];
+        int[][][] cykTable = new int[n][n][];
 
         for (int i = 0; i < n; i++) {
             char c = s.charAt(i);
             ArrayList<Integer> rules = g.getNRulesFromTRule(c);
             if (rules != null) {
-                for (int rule : rules) {
-                    cykTable[0][i][rule] = true;
-                }
+                    cykTable[0][i] = rules.stream().mapToInt(integer -> integer).toArray();
             }
         }
+
         for (int a = 1; a < n; a++){
             for (int b = 0; b < n-a; b++){
                 for (int c = 0; c < a; c++){
                     int leftIndex = a - c - 1;
                     int rightIndex = b + c + 1;
-                    boolean[] leftCell = cykTable[c][b];
-                    boolean[] rightCell = cykTable[leftIndex][rightIndex];
-                    for (int j = 1; j < ruleCount; j++) {
-                        int[][] rules = g.getArraysFromNRule(j);
-                        for (int[] rule: rules) {
-                            counter[0]++;
-                            if (leftCell[rule[0]] && rightCell[rule[1]]) {
-                                cykTable[a][b][j] = true;
-                                break;
+                    int[] leftCell = cykTable[c][b];
+                    int[] rightCell = cykTable[leftIndex][rightIndex];
+
+                    if (leftCell  != null && rightCell != null) {
+                        HashSet<Integer> rules = new HashSet<>();
+                        for (int i : leftCell) {
+                            for (int j : rightCell) {
+                                if (nonTerminalsToNonTerminals[i][j] != 0) {
+                                    rules.add(nonTerminalsToNonTerminals[i][j]);
+                                    counter[0]++;
+                                }
                             }
                         }
+                        if (rules.size() > 0) {
+                            cykTable[a][b] = rules.stream().mapToInt(integer -> integer).toArray();
+                        }
                     }
+
                 }
             }
         }
         // Make the assumption that the start symbol is the
         // first symbol in the grammar
         for (int i = 0; i < n; i++) {
-            if(cykTable[n-1][0][1]){
+            if(cykTable[n-1][0] != null){
                 return true;
             }
         }

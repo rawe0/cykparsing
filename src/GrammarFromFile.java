@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Scanner;
+import java.util.*;
 
 public class GrammarFromFile extends Grammar{
 
@@ -78,6 +75,8 @@ public class GrammarFromFile extends Grammar{
             ArrayList<Integer> nRules = nFromT.computeIfAbsent(tFromN[i], k -> new ArrayList<>());
             nRules.add(i);
         }
+        for(Map.Entry<Character, ArrayList<Integer>> entry: nFromT.entrySet()){
+        }
     }
 
     @Override
@@ -101,14 +100,7 @@ public class GrammarFromFile extends Grammar{
 
     @Override
     // Will return 0 if not found.
-    public int getRuleFromArray(int[] array) {
-        if(array.length == 2) {
-            return nonTerminalsToNonTerminal[array[0]][array[1]];
-        }else {
-            return nonTerminalsToNonTerminal[array[0]][0];
-        }
-    }
-    public int[][][] getGrammar(){
-        return nonTerminalToNonTerminals;
+    public int[][] getRuleFromArray() {
+        return nonTerminalsToNonTerminal;
     }
 }

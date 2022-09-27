@@ -76,9 +76,9 @@ public class Main {
             OOCStrings[i] = ")" + OOCStrings[i];
             COCStrings[i] = COCStrings[i]  + "(";
         }
-
+        //String [] testCases = {"BU_OC", "BU_OO", "BU_SG", "BU_OOC", "BU_COC"};
         String[] testCases = {"BU_OC", "BU_OO", "BU_COC", "BU_OOC", "BU_SG",
-                             "TD_OC", "TD_OO", "TD_COC", "TD_OOC", "TD_SG"};
+                            "TD_OC", "TD_OO", "TD_COC", "TD_OOC", "TD_SG"};
         // Run each testCases
         for (String testCase: testCases) {
             String[][] result = new String[0][];
