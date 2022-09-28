@@ -75,13 +75,14 @@ public class GrammarFromFile extends Grammar{
             ArrayList<Integer> nRules = nFromT.computeIfAbsent(tFromN[i], k -> new ArrayList<>());
             nRules.add(i);
         }
-        for(Map.Entry<Character, ArrayList<Integer>> entry: nFromT.entrySet()){
-        }
     }
 
     @Override
     public char getTRuleFromNRule(int nRule) {
         return tFromN[nRule];
+    }
+    public char[] getTRuleFromNRuleArray() {
+        return tFromN;
     }
 
     public int getRuleCount(){
@@ -96,6 +97,10 @@ public class GrammarFromFile extends Grammar{
     @Override
     public int[][] getArraysFromNRule(int nRule) {
         return nonTerminalToNonTerminals[nRule];
+    }
+    @Override
+    public int[][][] getArraysFromNRuleArray(){
+        return nonTerminalToNonTerminals;
     }
 
     @Override

@@ -36,7 +36,6 @@ public class Main {
         }
     }
 
-
     /**
      * Method to run all tests
      * @param nLengths Number of different lengths to run tests on
@@ -173,10 +172,16 @@ public class Main {
             counter[0] = 0;
 
 
-            if(parseMethod.equals("BU")){
-                parser.parseBU(testStrings[l], g, counter);
-            } else if (parseMethod.equals("TD")){
-                parser.parseTD(testStrings[l], g, counter);
+            switch (parseMethod) {
+                case "BU":
+                    parser.parseBU(testStrings[l], g, counter);
+                    break;
+                case "TD":
+                    parser.parseTD(testStrings[l], g, counter);
+                    break;
+                case "N":
+                    parser.parseNaive(testStrings[l], g, counter);
+                    break;
             }
 
             // Real runs
@@ -190,10 +195,16 @@ public class Main {
                 long startTime = System.nanoTime();
 
                 // Parse grammar
-                if(parseMethod.equals("BU")){
-                    wasParsed = parser.parseBU(testStrings[l], g, counter);
-                } else if (parseMethod.equals("TD")){
-                    wasParsed = parser.parseTD(testStrings[l], g, counter);
+                switch (parseMethod) {
+                    case "BU":
+                        wasParsed = parser.parseBU(testStrings[l], g, counter);
+                        break;
+                    case "TD":
+                        wasParsed = parser.parseTD(testStrings[l], g, counter);
+                        break;
+                    case "N":
+                        wasParsed = parser.parseNaive(testStrings[l], g, counter);
+                        break;
                 }
 
                 // Calculate time
