@@ -35,7 +35,9 @@ public class Main {
             System.exit(1);
         }
     }
+    private static void runNaiveTests(int nLengths, int nRuns){
 
+    }
     /**
      * Method to run all tests
      * @param nLengths Number of different lengths to run tests on
@@ -61,7 +63,8 @@ public class Main {
         GrammarFromFile balancedParenthesis = new GrammarFromFile(WPBReader);
         GrammarFromFile stupidGrammar = new GrammarFromFile(SGReader);
 
-        Parser parser = new Parser();
+        Parser balancedParser = new Parser(balancedParenthesis);
+        Parser stupidParser = new Parser(stupidGrammar);
 
         // Generate testStrings
         for (int i = 0; i < nLengths; i++) {
@@ -99,34 +102,34 @@ public class Main {
             // Run test
             switch (testCase) {
                 case "TD_SG":
-                    result = runTest(SGStrings, stupidGrammar, parser, "TD", nLengths, nRuns);
+                    result = runTest(SGStrings, stupidGrammar, stupidParser, "TD", nLengths, nRuns);
                     break;
                 case ("TD_COC"):
-                    result = runTest(COCStrings, balancedParenthesis, parser, "TD", nLengths, nRuns);
+                    result = runTest(COCStrings, balancedParenthesis, balancedParser, "TD", nLengths, nRuns);
                     break;
                 case "TD_OOC":
-                    result = runTest(OOCStrings, balancedParenthesis, parser, "TD", nLengths, nRuns);
+                    result = runTest(OOCStrings, balancedParenthesis, balancedParser, "TD", nLengths, nRuns);
                     break;
                 case "TD_OC":
-                    result = runTest(OCStrings, balancedParenthesis, parser, "TD", nLengths, nRuns);
+                    result = runTest(OCStrings, balancedParenthesis, balancedParser, "TD", nLengths, nRuns);
                     break;
                 case ("TD_OO"):
-                    result = runTest(OOStrings, balancedParenthesis, parser, "TD", nLengths, nRuns);
+                    result = runTest(OOStrings, balancedParenthesis, balancedParser, "TD", nLengths, nRuns);
                     break;
                 case "BU_SG":
-                    result = runTest(SGStrings, stupidGrammar, parser, "BU", nLengths, nRuns);
+                    result = runTest(SGStrings, stupidGrammar, stupidParser, "BU", nLengths, nRuns);
                     break;
                 case ("BU_COC"):
-                    result = runTest(COCStrings, balancedParenthesis, parser, "BU", nLengths, nRuns);
+                    result = runTest(COCStrings, balancedParenthesis, balancedParser, "BU", nLengths, nRuns);
                     break;
                 case "BU_OOC":
-                    result = runTest(OOCStrings, balancedParenthesis, parser, "BU", nLengths, nRuns);
+                    result = runTest(OOCStrings, balancedParenthesis, balancedParser, "BU", nLengths, nRuns);
                     break;
                 case "BU_OC":
-                    result = runTest(OCStrings, balancedParenthesis, parser, "BU", nLengths, nRuns);
+                    result = runTest(OCStrings, balancedParenthesis, balancedParser, "BU", nLengths, nRuns);
                     break;
                 case ("BU_OO"):
-                    result = runTest(OOStrings, balancedParenthesis, parser, "BU", nLengths, nRuns);
+                    result = runTest(OOStrings, balancedParenthesis, balancedParser, "BU", nLengths, nRuns);
                     break;
                 default:
                     throw new IllegalStateException("Unexpected value: " + testCase);
@@ -169,18 +172,19 @@ public class Main {
 
             // Dry run
             System.out.println("    Dry run for length: " + (l+1)*100);
-            counter[0] = 0;
 
+            // Reset counter
+            parser.resetCounter();
 
             switch (parseMethod) {
                 case "BU":
-                    parser.parseBU(testStrings[l], g, counter);
+                    parser.parseBU(testStrings[l]);
                     break;
                 case "TD":
-                    parser.parseTD(testStrings[l], g, counter);
+                    parser.parseTD(testStrings[l]);
                     break;
                 case "N":
-                    parser.parseNaive(testStrings[l], g, counter);
+                    parser.parseNaive(testStrings[l]);
                     break;
             }
 
@@ -191,19 +195,21 @@ public class Main {
 
                 System.out.println("        Run: " + i + "...");
                 // Reset counter and start time
-                counter[0] = 0;
                 long startTime = System.nanoTime();
+
+                // Reset counter
+                parser.resetCounter();
 
                 // Parse grammar
                 switch (parseMethod) {
                     case "BU":
-                        wasParsed = parser.parseBU(testStrings[l], g, counter);
+                        wasParsed = parser.parseBU(testStrings[l]);
                         break;
                     case "TD":
-                        wasParsed = parser.parseTD(testStrings[l], g, counter);
+                        wasParsed = parser.parseTD(testStrings[l]);
                         break;
                     case "N":
-                        wasParsed = parser.parseNaive(testStrings[l], g, counter);
+                        wasParsed = parser.parseNaive(testStrings[l]);
                         break;
                 }
 
@@ -212,7 +218,7 @@ public class Main {
                 long totalTime = endTime - startTime;
 
                 // Store result
-                result[l][i] = String.format("%d, %d", totalTime, counter[0]);
+                result[l][i] = String.format("%d, %d", totalTime, parser.getCount());
                 if(wasParsed){
                     System.out.println(ANSI_GREEN + "        Time, Counter: " + result[l][i] + ANSI_RESET);
                 }else{

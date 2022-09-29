@@ -108,4 +108,7 @@ public class GrammarFromFile extends Grammar{
     public int[][] getRuleFromArray() {
         return nonTerminalsToNonTerminal;
     }
+    public HashMap<Character, ArrayList<Integer>> getNFromT(){
+        return nFromT;
+    }
 }

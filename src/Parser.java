@@ -1,30 +1,49 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 
 public class Parser {
-    public boolean parseBU(String s, Grammar g, long[] counter) {
+    private final int[][][] nonTerminalToNonTerminals;
+    private final int[][] nonTerminalsToNonTerminals;
+    private final char[] tRuleFromNRuleArray;
+    private final HashMap<Character, ArrayList<Integer>> nFromTRule;
+    private final int ruleCount;
+    private int counter;
+    Parser(Grammar grammar){
+        this.nonTerminalToNonTerminals =  grammar.getArraysFromNRuleArray();
+        this.nonTerminalsToNonTerminals = grammar.getRuleFromArray();
+        this.tRuleFromNRuleArray = grammar.getTRuleFromNRuleArray();
+        this.nFromTRule = grammar.getNFromT();
+        this.ruleCount = grammar.getRuleCount();
+        counter = 0;
+    }
+    public void resetCounter(){
+        counter = 0;
+    }
+    public int getCount(){
+        return counter;
+    }
 
-        int [][] nonTerminalsToNonTerminals = g.getRuleFromArray();
+    public boolean parseBU(String s) {
 
         int n = s.length();
         Integer[][][] cykTable = new Integer[n][n][];
 
         for (int i = 0; i < n; i++) {
             char c = s.charAt(i);
-            ArrayList<Integer> rules = g.getNRulesFromTRule(c);
+            ArrayList<Integer> rules = nFromTRule.get(c);
             if (rules == null) {
                     return false;
             } else {
                 cykTable[0][i] = rules.toArray(new Integer[0]);
             }
-
         }
 
         for (int a = 1; a < n; a++){
             for (int b = 0; b < n-a; b++){
                 HashSet<Integer> rules = new HashSet<>();
                 for (int c = 0; c < a; c++){
-                    counter[0]++;
+                    counter++;
                     int leftIndex = a - c - 1;
                     int rightIndex = b + c + 1;
                     Integer[] leftCell = cykTable[c][b];
@@ -54,10 +73,9 @@ public class Parser {
         }
         return false;
     }
-    public boolean parseTD(String s, Grammar g, long[] counter) {
+    public boolean parseTD(String s) {
         int n = s.length();
         char [] string = s.toCharArray();
-        int ruleCount = g.getRuleCount();
         Boolean[][][] table = new Boolean[n+1][n+1][ruleCount];
         for(int i = 0; i < n; i++){
             for(int j = 0; j < n; j++){
@@ -66,57 +84,47 @@ public class Parser {
                 }
             }
         }
-        int[][][] nonTerminalToNonTerminals =  g.getArraysFromNRuleArray();
-        char[] TRuleFromNRuleArray = g.getTRuleFromNRuleArray();
         // Assume that the first NON-TERMINAL is the start symbol
-        return parseTD(1, 0, n, string, table, counter, TRuleFromNRuleArray, nonTerminalToNonTerminals);
+        return parseTD(1, 0, n, string, table);
     }
-    public boolean parseTD(int nonTerminal, int start, int end, char [] s, Boolean[][][] table, long[] counter, char[] tRuleFromNRuleArray, int[][][] nonTerminalToNonTerminals){
-        counter[0]++;
+    public boolean parseTD(int nonTerminal, int start, int end, char [] s, Boolean[][][] table){
+        counter++;
         if(table[start][end][nonTerminal] != null){
             return table[start][end][nonTerminal];
         }
         if (start == end - 1) {
-            return tRuleFromNRuleArray[nonTerminal] == s[start];
+            table[start][end][nonTerminal] = tRuleFromNRuleArray[nonTerminal] == s[start];
+            return table[start][end][nonTerminal];
         } else {
             int [][] rules = nonTerminalToNonTerminals[nonTerminal];
             for (int[] rule : rules) {
                 for (int i = start + 1; i < end; i++) {
-
-                    if(table[start][i][rule[0]] == null){
-                        table[start][i][rule[0]] = parseTD(rule[0], start, i, s, table, counter, tRuleFromNRuleArray, nonTerminalToNonTerminals);
-                    }
-
-                    if(table[i][end][rule[1]] == null){
-                        table[i][end][rule[1]] = parseTD(rule[1], i, end, s, table, counter, tRuleFromNRuleArray, nonTerminalToNonTerminals);
-                    }
-
-                    if(table[start][i][rule[0]] && table[i][end][rule[1]]){
+                    if(parseTD(rule[0], start, i, s, table) && parseTD(rule[1], i, end, s, table)){
+                        table[start][end][nonTerminal] = true;
                         return true;
                     }
                 }
             }
         }
+        table[start][end][nonTerminal] = false;
         return false;
     }
-    public boolean parseNaive(String s, Grammar g, long[] counter) {
+    public boolean parseNaive(String s) {
         int n = s.length();
         char [] string = s.toCharArray();
-        int[][][] nonTerminalToNonTerminals =  g.getArraysFromNRuleArray();
-        char[] TRuleFromNRuleArray = g.getTRuleFromNRuleArray();
         // Assume that the first NON-TERMINAL is the start symbol
-        return parseNaive(1, 0 , n, string, counter, nonTerminalToNonTerminals, TRuleFromNRuleArray);
+        return parseNaive(1, 0 , n, string);
     }
-    public boolean parseNaive(int nonTerminal, int start, int end, char [] s, long[] counter, int[][][] nonTerminalToNonTerminals, char[] TRuleFromNRuleArray){
-        counter[0]++;
+    public boolean parseNaive(int nonTerminal, int start, int end, char [] s){
+        counter++;
         if(start == end - 1){
-            return TRuleFromNRuleArray[nonTerminal] == s[start];
+            return tRuleFromNRuleArray[nonTerminal] == s[start];
         }
         else{
             int [][] rules = nonTerminalToNonTerminals[nonTerminal];
             for (int[] rule : rules) {
                 for (int i = start + 1; i < end; i++) {
-                    if (parseNaive(rule[0], start, i, s, counter, nonTerminalToNonTerminals, TRuleFromNRuleArray) && parseNaive(rule[1], i, end, s, counter, nonTerminalToNonTerminals, TRuleFromNRuleArray)) {
+                    if (parseNaive(rule[0], start, i, s) && parseNaive(rule[1], i, end, s)) {
                         return true;
                     }
                 }
