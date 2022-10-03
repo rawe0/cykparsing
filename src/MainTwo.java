@@ -1,51 +1,51 @@
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Scanner;
 
-
+/**
+ * Main class to simply run the scripts one by one
+ */
 public class MainTwo {
-
-    public static final String ANSI_RESET = "\u001B[0m";
-    public static final String ANSI_RED = "\u001B[31m";
-    public static final String ANSI_GREEN = "\u001B[32m";
     public static void main(String[] args) throws IOException {
 
-        if (args.length == 0) {
+        if (args.length == 4) {
 
-            runAllTests(25, 10);
+            String grammarLocation = args[0];
+            String stringLocation = args[1];
+            String parseMethod = args[2];
+            int n = Integer.parseInt(args[3]);
 
-        } else if (args.length == 1) {
+            File grammarFile = new File(grammarLocation);
+            File stringFile = new File(stringLocation);
 
-            int nRuns = Integer.parseInt(args[0]);
+            Scanner grammarInput = new Scanner(grammarFile);
+            Scanner stringInput = new Scanner(stringFile);
 
-            runAllTests(25, nRuns);
+            GrammarFromFile grammar = new GrammarFromFile(grammarInput);
+            ArrayList<String> strings = new ArrayList<>();
 
-        } else if (args.length == 2) {
+            Parser parser = new Parser(grammar);
 
-            int nRuns = Integer.parseInt(args[0]);
-            int nLength = Integer.parseInt(args[1]);
+            while (stringInput.hasNextLine()) {
+                strings.add(stringInput.nextLine());
+            }
 
-            runAllTests(nLength, nRuns);
+            String[] stringArray = strings.toArray(new String[0]);
+
+            runTest(stringArray, grammar, parser, parseMethod, stringArray.length, n);
+
+            grammarInput.close();
+            stringInput.close();
 
         } else {
-            System.out.println("Please provide 0-2 arguments" +
-                    "\nUsage: <number of runs> (default 10) <max length> (default 25, would be *100 so 25 = 2500)");
+            System.out.println("Please provide 04arguments" +
+                    "\nUsage: <Input file for grammar to run>" +
+                    " <Input file for strings to be parsed>" +
+                    " <Method to parse strings with>" +
+                    " <Number of times to parse each string>");
             System.exit(1);
         }
-    }
-    private static void runNaiveTests(int nLengths, int nRuns){
-
-    }
-    /**
-     * Method to run all tests
-     * @param nLengths Number of different lengths to run tests on
-     * @param nRuns Number of runs to run per test string
-     * @throws IOException Exception from file handling
-     */
-    private static void runAllTests(int nLengths, int nRuns) throws IOException {
-
     }
 
     /**
@@ -54,16 +54,16 @@ public class MainTwo {
      * @param g The grammar
      * @param parser The parser
      * @param parseMethod The parsing method
-     * @param nLengths number of test strings
+     * @param nStrings number of test strings
      * @param nRuns number of test runs per string
      * @return an array of the results
      */
     private static String[][] runTest(String[] testStrings, Grammar g, Parser parser,
-                                      String parseMethod, int nLengths, int nRuns){
+                                      String parseMethod, int nStrings, int nRuns){
 
-        String [][] result = new String[nLengths][nRuns];
+        String [][] result = new String[nStrings][nRuns];
 
-        for(int l = 0; l < nLengths; l++){
+        for(int l = 0; l < nStrings; l++){
 
             // Reset counter
             parser.resetCounter();
@@ -108,39 +108,12 @@ public class MainTwo {
                 long totalTime = endTime - startTime;
 
                 // Store result
-                result[l][i] = String.format("%d, %d", totalTime, parser.getCount());
-                System.out.println(ANSI_RED + "        Time, Counter: " + result[l][i] + ANSI_RESET);
-
+                result[l][i] = String.format("%d, %d, %d, %d\n",testStrings[l].length(), (i+1), totalTime, parser.getCount());
+                System.out.println(result[l][i]);
             }
-
         }
         return result;
     }
 
-    /**
-     * Private method to generate test strings
-     * @param type Type of String
-     * @param n Number of repetitions
-     * @return the generated string
-     */
-    private static String generateString(int type, int n){
-        StringBuilder base = null;
-        if(type == 1){
-            base = new StringBuilder("()()()()()()()()()()()()()()()()()()()()()()()()()()()" +
-                    "()()()()()()()()()()()()()()()()()()()()()()()()()()()()");
-            base.append(String.valueOf(base).repeat(n));
-        }else if (type == 2){
-            StringBuilder leftBase = new StringBuilder("((((((((((((((((((((((((((((((((((((((((((((((((((");
-            StringBuilder rightBase = new StringBuilder("))))))))))))))))))))))))))))))))))))))))))))))))))");
-            leftBase.append(String.valueOf(leftBase).repeat(n));
-            rightBase.append(String.valueOf(rightBase).repeat(n));
-            base = leftBase.append(rightBase);
-        }else if (type == 3){
-            base = new StringBuilder("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" +
-                    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-            base.append(String.valueOf(base).repeat(n));
-        }
-        return String.valueOf(base);
-    }
 
 }
