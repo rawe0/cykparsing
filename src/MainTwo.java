@@ -33,7 +33,7 @@ public class MainTwo {
 
             String[] stringArray = strings.toArray(new String[0]);
 
-            runTest(stringArray, grammar, parser, parseMethod, stringArray.length, n);
+            runTest(stringArray, parser, parseMethod, stringArray.length, n);
 
             grammarInput.close();
             stringInput.close();
@@ -58,7 +58,7 @@ public class MainTwo {
      * @param nRuns number of test runs per string
      * @return an array of the results
      */
-    private static String[][] runTest(String[] testStrings, Grammar g, Parser parser,
+    private static String[][] runTest(String[] testStrings, Parser parser,
                                       String parseMethod, int nStrings, int nRuns){
 
         String [][] result = new String[nStrings][nRuns];
@@ -108,7 +108,7 @@ public class MainTwo {
                 long totalTime = endTime - startTime;
 
                 // Store result
-                result[l][i] = String.format("%d, %d, %d, %d\n",testStrings[l].length(), (i+1), totalTime, parser.getCount());
+                result[l][i] = String.format("%d, %d, %d, %d",testStrings[l].length(), (i+1), totalTime, parser.getCount());
                 System.out.println(result[l][i]);
             }
         }
