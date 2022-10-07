@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 
@@ -64,14 +65,9 @@ public class Parser {
                 }
             }
         }
-        // Make the assumption that the start symbol is the
-        // first symbol in the grammar
-        for (int i = 0; i < n; i++) {
-            if(cykTable[n-1][0] != null){
-                return true;
-            }
-        }
-        return false;
+
+        // Make the assumption that the start symbol is the first rule in the grammar
+        return cykTable[n-1][0] != null && Arrays.asList(cykTable[n-1][0]).contains(1);
     }
     public boolean parseTD(String s) {
         int n = s.length();
@@ -121,7 +117,7 @@ public class Parser {
             return tRuleFromNRuleArray[nonTerminal] == s[start];
         }
         else{
-            int [][] rules = nonTerminalToNonTerminals[nonTerminal];
+                int [][] rules = nonTerminalToNonTerminals[nonTerminal];
             for (int[] rule : rules) {
                 for (int i = start + 1; i < end; i++) {
                     if (parseNaive(rule[0], start, i, s) && parseNaive(rule[1], i, end, s)) {
