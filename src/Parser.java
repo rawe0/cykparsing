@@ -69,6 +69,8 @@ public class Parser {
         // Make the assumption that the start symbol is the first rule in the grammar
         return cykTable[n-1][0] != null && Arrays.asList(cykTable[n-1][0]).contains(1);
     }
+
+
     public boolean parseTD(String s) {
         int n = s.length();
         char [] string = s.toCharArray();
@@ -105,6 +107,11 @@ public class Parser {
         table[start][end][nonTerminal] = false;
         return false;
     }
+
+
+
+
+
     public boolean parseNaive(String s) {
         int n = s.length();
         char [] string = s.toCharArray();
