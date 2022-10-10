@@ -1,3 +1,5 @@
+import jdk.dynalink.beans.StaticClass;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -19,7 +21,6 @@ public class LinearGrammarFromFile{
         rules = new ArrayList<>();
         nonTerminalIndexMap = new HashMap<>();
 
-
         while (input.hasNextLine()) {
             String data = input.nextLine();
             for (char c: data.toCharArray()) {
@@ -32,6 +33,7 @@ public class LinearGrammarFromFile{
             }
             rules.add(data);
         }
+
         terminal = new char[ruleCount];
         leftTerminal = new int[ruleCount][0][0];
         rightTerminal = new int[ruleCount][0][0];
@@ -41,7 +43,6 @@ public class LinearGrammarFromFile{
 
             char nonTerminal = split[0].charAt(0);
             char charOne = split[1].charAt(0);
-
             int index = nonTerminalIndexMap.get((int) nonTerminal);
 
             if (split[1].length() == 1) {
@@ -60,9 +61,9 @@ public class LinearGrammarFromFile{
                             new int[]{nonTerminalIndexMap.get((int) charOne), (int) charTwo};
                 }
             }
-
         }
     }
+
     public char[] getTerminal() {
         return terminal;
     }

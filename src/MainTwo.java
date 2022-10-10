@@ -41,8 +41,6 @@ public class MainTwo {
         } else if (args.length == 5) {
             String grammarLocation = args[0];
             String stringLocation = args[1];
-            String parseMethod = args[2];
-            int n = Integer.parseInt(args[3]);
 
             File grammarFile = new File(grammarLocation);
             File stringFile = new File(stringLocation);
@@ -58,8 +56,12 @@ public class MainTwo {
             while (stringInput.hasNextLine()) {
                 strings.add(stringInput.nextLine());
             }
-
             String[] stringArray = strings.toArray(new String[0]);
+            for (String s: stringArray) {
+                System.out.println(parser.parseLinearTD(s));
+            }
+
+
         } else {
             System.out.println("Please provide 04arguments" +
                     "\nUsage: <Input file for grammar to run>" +

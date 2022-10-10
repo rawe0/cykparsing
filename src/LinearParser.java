@@ -1,10 +1,7 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-
 public class LinearParser {
-    private char[] terminals;
-    private int [][][] leftTerminals;
-    private int [][][] rightTerminals;
+    private final char[] terminals;
+    private final int [][][] leftTerminals;
+    private final int [][][] rightTerminals;
     private final int ruleCount;
     private int counter;
 
@@ -15,13 +12,14 @@ public class LinearParser {
         this.ruleCount = grammar.getRuleCount();
         counter = 0;
     }
+
     public void resetCounter(){
         counter = 0;
     }
     public int getCount(){
         return counter;
     }
-    public boolean parseTD(String s) {
+    public boolean parseLinearTD(String s) {
         int n = s.length();
         char [] string = s.toCharArray();
         Boolean[][][] table = new Boolean[n+1][n+1][ruleCount];
@@ -32,7 +30,7 @@ public class LinearParser {
                 }
             }
         }
-        // Assume that the first NON-TERMINAL is the start symbol
+        // Assume that the first Non-terminal is the start symbol
         return parseLinearTD(1, 0, n, string, table);
     }
     public boolean parseLinearTD(int nonTerminal, int start, int end, char [] s, Boolean[][][] table){
@@ -46,27 +44,23 @@ public class LinearParser {
         } else {
             int [][] leftRules = leftTerminals[nonTerminal];
             for (int[] rule : leftRules) {
+                // Non-terminal is on the right side
+                // Terminal is on the left side
                 char t = (char) rule[0];
-                int  n = rule[1];
-                if(t == )
-                for (int i = start + 1; i < end; i++) {
-                    if(parseLinearTD(rule[0], start, i, s, table) && parseLinearTD(rule[1], i, end, s, table)){
-                        table[start][end][nonTerminal] = true;
-                        return true;
-                    }
+                if(t == s[start] && parseLinearTD(rule[1], start+1, end, s, table)) {
+                    table[start][end][nonTerminal] = true;
+                    return true;
                 }
             }
-            int [][] rightRules = leftTerminals[nonTerminal];
-            for (int[] rule : leftRules) {
+            int [][] rightRules = rightTerminals[nonTerminal];
+            for (int[] rule : rightRules) {
+                // Non-terminal is on the left side
+                // Terminal is on the right side
                 char t = (char) rule[1];
-                int  n = rule[0];
-                if()
-                    for (int i = start + 1; i < end; i++) {
-                        if(parseLinearTD(rule[0], start, i, s, table) && parseLinearTD(rule[1], i, end, s, table)){
-                            table[start][end][nonTerminal] = true;
-                            return true;
-                        }
-                    }
+                if(t == s[end-1] && parseLinearTD(rule[0], start, end - 1, s, table)) {
+                    table[start][end][nonTerminal] = true;
+                    return true;
+                }
             }
         }
         table[start][end][nonTerminal] = false;

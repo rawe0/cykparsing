@@ -3,9 +3,8 @@ import java.util.*;
 public class GrammarFromFile extends Grammar{
 
     int [][][] nonTerminalToNonTerminals;
-    char [] tFromN;
-
     int [][] nonTerminalsToNonTerminal;
+    char [] tFromN;
     HashMap<Character, ArrayList<Integer>> nFromT;
 
     HashMap<Integer, Integer> nonTerminalIndexMap;
@@ -77,10 +76,31 @@ public class GrammarFromFile extends Grammar{
         }
     }
 
-    @Override
-    public char getTRuleFromNRule(int nRule) {
-        return tFromN[nRule];
+    public static fromLinearGrammar(LinearGrammarFromFile linearGrammar){
+
+        char[] terminals = linearGrammar.getTerminal();
+        int [][][] leftTerminals = linearGrammar.getLeftTerminal();
+        int [][][] rightTerminals = linearGrammar.getLeftTerminal();
+
+        ArrayList<Character> termsToCheck = new ArrayList<>();
+
+        for (int[][] nonTerminals: leftTerminals) {
+            for (int[] rule: nonTerminals) {
+                termsToCheck.add((char) rule[0]);
+            }
+        }
+
+        for (int[][] nonTerminals: rightTerminals) {
+            for (int[] rule: nonTerminals) {
+                termsToCheck.add((char) rule[1]);
+            }
+        }
+
+
+
+
     }
+
     public char[] getTRuleFromNRuleArray() {
         return tFromN;
     }
@@ -89,16 +109,6 @@ public class GrammarFromFile extends Grammar{
         return ruleCount;
     }
 
-    @Override
-    public ArrayList<Integer> getNRulesFromTRule(char tRule) {
-        return nFromT.get(tRule);
-    }
-
-    @Override
-    public int[][] getArraysFromNRule(int nRule) {
-        return nonTerminalToNonTerminals[nRule];
-    }
-    @Override
     public int[][][] getArraysFromNRuleArray(){
         return nonTerminalToNonTerminals;
     }
