@@ -6,12 +6,25 @@ public class GrammarFromFile extends Grammar{
     int [][] nonTerminalsToNonTerminal;
     char [] tFromN;
     HashMap<Character, ArrayList<Integer>> nFromT;
-
     HashMap<Integer, Integer> nonTerminalIndexMap;
-    ArrayList<String> rules;
     public int ruleCount;
 
+    ArrayList<String> rules;
 
+    private GrammarFromFile(int ruleCount,
+                            HashMap<Integer, Integer> nonTerminalIndexMap,
+                            int[][][] nonTerminalToNonTerminals,
+                            int[][] nonTerminalsToNonTerminal, char[] tFromN,
+                            HashMap<Character, ArrayList<Integer>> nFromT){
+
+        this.ruleCount = ruleCount;
+        this.nonTerminalIndexMap = nonTerminalIndexMap;
+        this.nonTerminalToNonTerminals = nonTerminalToNonTerminals;
+        this.nonTerminalsToNonTerminal = nonTerminalsToNonTerminal;
+        this.nFromT = nFromT;
+        this.tFromN = tFromN;
+
+    }
 
 
     public GrammarFromFile(Scanner input) {
@@ -76,55 +89,80 @@ public class GrammarFromFile extends Grammar{
         }
     }
 
-    public static fromLinearGrammar(LinearGrammarFromFile linearGrammar){
-
+    public static GrammarFromFile fromLinearGrammar(LinearGrammarFromFile linearGrammar){
+        HashMap<Integer, Integer> nonTerminalIndexMap = linearGrammar.getNonTerminalIndexMap();
         char[] terminals = linearGrammar.getTerminal();
         int [][][] leftTerminals = linearGrammar.getLeftTerminal();
         int [][][] rightTerminals = linearGrammar.getLeftTerminal();
         int nRules = linearGrammar.getRuleCount();
         HashMap<Character, Integer> terminalIndexMap = new HashMap<>();
-        HashSet<Character> nonTerminalsToCreate = new HashSet<>();
+        HashSet<Character> terminalsToAdd = new HashSet<>();
 
         for (int i = 0; i < terminals.length; i++) {
             terminalIndexMap.put(terminals[i], i);
         }
 
 
-
-
         for(int i = 0; i < nRules; i++){
-
-            char leftChar;
-            char rightChar;
-
             for(int j = 0; j < leftTerminals[i].length; j++){
-                leftChar = (char) leftTerminals[i][j][0];
+                char  character = (char) leftTerminals[i][j][0];
+
+                Integer index = terminalIndexMap.get(character);
+                if(index == null){
+                    terminalsToAdd.add(character);
+                    continue;
+                }
+                if(rightTerminals[index] != null ||  leftTerminals[index] != null){
+                    terminalsToAdd.add(character);
+                }
             }
+
             for(int j = 0; j < rightTerminals[i].length; j++){
-                rightChar = (char) rightTerminals[i][j][0];
-            }
-            Integer leftIndex = terminalIndexMap.get(leftChar);
-            Integer rightIndex = terminalIndexMap.get(rightChar);
-            if(leftIndex == null){
-                nonTerminalsToCreate.add(leftChar);
-            }
-            if(rightIndex == null){
-                nonTerminalsToCreate.add(leftChar);
-            }
-            int leftTotal = 0;
-            int rightTotal = 0;
+                char  character = (char) rightTerminals[i][j][1];
+                Integer index = terminalIndexMap.get(character);
 
-            leftTotal += leftTerminals[leftIndex].length;
-            leftTotal += rightTerminals[leftIndex].length;
-            leftTotal += terminals[leftIndex];
+                if(index == null){
+                    terminalsToAdd.add(character);
+                    continue;
+                }
+                if(rightTerminals[index] != null ||  leftTerminals[index] != null){
+                    terminalsToAdd.add(character);
+                }
+            }
+        }
 
-            rightTotal += rightTerminals[rightIndex].length;
-            rightTotal += leftTerminals[rightIndex].length;
-            rightTotal += terminals[rightIndex];
+        HashMap<Character, ArrayList<Integer>> nFromT =  new HashMap<>();
 
+        char[] tFromN = Arrays.copyOf(terminals,
+                terminals.length + terminalsToAdd.size());
+
+        for (char terminal: terminalsToAdd) {
+            nRules++;
+            tFromN[nRules] = terminal;
+        }
+
+        for (int i = 0; i < terminals.length; i++){
+            ArrayList<Integer> newList = new ArrayList<>();
+            newList.add(i);
+            nFromT.put(terminals[i], newList);
         }
 
 
+        HashMap<Integer, Integer> nonTerminalIndexMap;
+
+
+
+        int [][][] nonTerminalToNonTerminals = new int[nRules][0][0];
+        int [][] nonTerminalsToNonTerminal = new int[nRules][nRules];
+
+        for(int i = 0; i < leftTerminals.length; i++){
+            for(int j = 0; j < leftTerminals[i].length; j++){
+                int[] rule = leftTerminals[i][j];
+                int convertedN = nFromT.get((char) rule[0]).get(0);
+                nonTerminalToNonTerminals[i][]
+
+            }
+        }
 
 
 

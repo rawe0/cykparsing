@@ -63,6 +63,9 @@ public class LinearGrammarFromFile{
             }
         }
     }
+    public HashMap<Integer, Integer> getNonTerminalIndexMap(){
+        return nonTerminalIndexMap;
+    }
 
     public char[] getTerminal() {
         return terminal;
