@@ -81,20 +81,51 @@ public class GrammarFromFile extends Grammar{
         char[] terminals = linearGrammar.getTerminal();
         int [][][] leftTerminals = linearGrammar.getLeftTerminal();
         int [][][] rightTerminals = linearGrammar.getLeftTerminal();
+        int nRules = linearGrammar.getRuleCount();
+        HashMap<Character, Integer> terminalIndexMap = new HashMap<>();
+        HashSet<Character> nonTerminalsToCreate = new HashSet<>();
 
-        ArrayList<Character> termsToCheck = new ArrayList<>();
-
-        for (int[][] nonTerminals: leftTerminals) {
-            for (int[] rule: nonTerminals) {
-                termsToCheck.add((char) rule[0]);
-            }
+        for (int i = 0; i < terminals.length; i++) {
+            terminalIndexMap.put(terminals[i], i);
         }
 
-        for (int[][] nonTerminals: rightTerminals) {
-            for (int[] rule: nonTerminals) {
-                termsToCheck.add((char) rule[1]);
+
+
+
+        for(int i = 0; i < nRules; i++){
+
+            char leftChar;
+            char rightChar;
+
+            for(int j = 0; j < leftTerminals[i].length; j++){
+                leftChar = (char) leftTerminals[i][j][0];
             }
+            for(int j = 0; j < rightTerminals[i].length; j++){
+                rightChar = (char) rightTerminals[i][j][0];
+            }
+            Integer leftIndex = terminalIndexMap.get(leftChar);
+            Integer rightIndex = terminalIndexMap.get(rightChar);
+            if(leftIndex == null){
+                nonTerminalsToCreate.add(leftChar);
+            }
+            if(rightIndex == null){
+                nonTerminalsToCreate.add(leftChar);
+            }
+            int leftTotal = 0;
+            int rightTotal = 0;
+
+            leftTotal += leftTerminals[leftIndex].length;
+            leftTotal += rightTerminals[leftIndex].length;
+            leftTotal += terminals[leftIndex];
+
+            rightTotal += rightTerminals[rightIndex].length;
+            rightTotal += leftTerminals[rightIndex].length;
+            rightTotal += terminals[rightIndex];
+
         }
+
+
+
 
 
 
