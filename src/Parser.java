@@ -51,7 +51,6 @@ public class Parser {
                             for (int j : rightCell) {
                                 if (nonTerminalsToNonTerminals[i][j] != 0) {
                                     rules.add(nonTerminalsToNonTerminals[i][j]);
-
                                 }
                             }
                         }
@@ -69,7 +68,7 @@ public class Parser {
     public boolean parseBUErrorCorrection(String s) {
 
         int n = s.length();
-        List<ParseItem>[][] cykTable = new List<>[n][n];
+        HashMap<Integer, ParseItem>[][] cykTable = new HashMap[n][n];
 
         // Add all the valid rules with error 0
         for (int i = 0; i < n; i++) {
@@ -77,52 +76,92 @@ public class Parser {
             ArrayList<Integer> rules = nFromTRule.get(c);
             for (int rule : rules) {
                 ParseItem item = new ParseItem("" + c,0 , rule);
-                cykTable[0][i] = new ArrayList<>();
-                cykTable[0][i].add(item);
+                cykTable[0][i] = new HashMap<>();
+                cykTable[0][i].put(rule, item);
             }
         }
 
         // Add invalid rules with error 1
         for (int i = 0; i < n; i++){
             for (int j = 0; j < tRuleFromNRuleArray.length; j++){
-                if(!cykTable[0][i].contains(new ParseItem("", 1, j))){
-                    cykTable[0][i].add(new ParseItem(tRuleFromNRuleArray[j] + "", 1, j));
+                if(!cykTable[0][i].containsKey(j)){
+                    cykTable[0][i].put(j, new ParseItem(tRuleFromNRuleArray[j] + "", 1, j));
                 }
             }
         }
 
         // Add lambda rules with error 1
         for (int i = 0; i < n; i++){
-            if(!cykTable[0][i].contains(new ParseItem("", 1, -1))){
-                cykTable[0][i].add(new ParseItem("", 1, -1));
-            }
+
+                cykTable[0][i].put(-1, new ParseItem("", 1, -1));
         }
 
         for (int a = 1; a < n; a++){
             for (int b = 0; b < n-a; b++){
-                HashSet<Integer> rules = new HashSet<>();
+                cykTable[a][b] = new HashMap<Integer, ParseItem>();
                 for (int c = 0; c < a; c++){
                     counter++;
                     int leftIndex = a - c - 1;
                     int rightIndex = b + c + 1;
-                    List<ParseItem> leftCell = cykTable[c][b];
-                    List<ParseItem> rightCell = cykTable[leftIndex][rightIndex];
-                    if (leftCell  != null && rightCell != null) {
-                        for (int i : leftCell) {
-                            for (int j : rightCell) {
-                                if (nonTerminalsToNonTerminals[i][j] != 0) {
-                                    rules.add(nonTerminalsToNonTerminals[i][j]);
+                    HashMap<Integer, ParseItem> leftCell = cykTable[c][b];
+                    HashMap<Integer, ParseItem> rightCell = cykTable[leftIndex][rightIndex];
+                    for (Map.Entry<Integer, ParseItem> leftSet: leftCell.entrySet()){
+                        for (Map.Entry<Integer, ParseItem> rightSet: rightCell.entrySet()) {
+                            ParseItem leftItem = leftSet.getValue();
+                            ParseItem rightItem = rightSet.getValue();
+                            // Case where both are lambda
+                            if (leftItem.nonTerminalIndex == -1 && rightItem.nonTerminalIndex == -1) {
+                                cykTable[a][b].put(-1, new ParseItem("", leftItem.numberOfErrors + rightItem.numberOfErrors, -1));
+                                continue;
+                            }
+                            // Case where left item is lambda
+                            if (leftItem.nonTerminalIndex == -1) {
+                                int error = leftItem.numberOfErrors + rightItem.numberOfErrors;
+                                int ntIndex = rightItem.nonTerminalIndex;
+                                ParseItem currentItem = cykTable[a][b].get(ntIndex);
+                                if (currentItem == null) {
+                                    cykTable[a][b].put(rightItem.nonTerminalIndex, new ParseItem(rightItem.parseString, error, ntIndex));
+                                } else {
+                                    if (currentItem.numberOfErrors > error) {
+                                        cykTable[a][b].put(rightItem.nonTerminalIndex, new ParseItem(rightItem.parseString, error, ntIndex));
+                                    }
+                                }
+                                continue;
+                            }
+                            // Case where right item is lambda
+                            if (rightItem.nonTerminalIndex == -1) {
+                                int error = leftItem.numberOfErrors + rightItem.numberOfErrors;
+                                int ntIndex = leftItem.nonTerminalIndex;
+                                ParseItem currentItem = cykTable[a][b].get(ntIndex);
+                                if (currentItem == null) {
+                                    cykTable[a][b].put(leftItem.nonTerminalIndex, new ParseItem(leftItem.parseString, error, ntIndex));
+                                } else {
+                                    if (currentItem.numberOfErrors > error) {
+                                        cykTable[a][b].put(leftItem.nonTerminalIndex, new ParseItem(leftItem.parseString, error, ntIndex));
+                                    }
+                                }
+                                continue;
+                            }
+                            // Case where none of the items are lambda
+                            if (nonTerminalsToNonTerminals[leftItem.nonTerminalIndex][rightItem.nonTerminalIndex] != 0) {
+                                int error = leftItem.numberOfErrors + rightItem.numberOfErrors;
+                                int ntIndex = nonTerminalsToNonTerminals[leftItem.nonTerminalIndex][rightItem.nonTerminalIndex];
+                                ParseItem currentItem = cykTable[a][b].get(ntIndex);
+                                if (currentItem == null) {
+                                    cykTable[a][b].put(leftItem.nonTerminalIndex, new ParseItem(leftItem.parseString, error, ntIndex));
+                                } else {
+                                    if (currentItem.numberOfErrors > error) {
+                                        cykTable[a][b].put(leftItem.nonTerminalIndex, new ParseItem(leftItem.parseString, error, ntIndex));
+                                    }
                                 }
                             }
                         }
                     }
                 }
-                if (rules.size() > 0) {
-                    cykTable[a][b] = rules.toArray(new Integer[0]);
-                }
             }
         }
-
+        // Check if starting symbol has 0 errors, or return the starting symbol with lowest amount of errors and string etc...
+        
         // Make the assumption that the start symbol is the first rule in the grammar
         return cykTable[n-1][0] != null && Arrays.asList(cykTable[n-1][0]).contains(1);
     }
