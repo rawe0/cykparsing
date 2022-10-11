@@ -69,6 +69,50 @@ public class Parser {
         // Make the assumption that the start symbol is the first rule in the grammar
         return cykTable[n-1][0] != null && Arrays.asList(cykTable[n-1][0]).contains(1);
     }
+    public boolean parseBUErrorCorrection(String s) {
+
+        int n = s.length();
+        ParseItem[][][] cykTable = new ParseItem[n][n][];
+
+        for (int i = 0; i < n; i++) {
+            char c = s.charAt(i);
+            ArrayList<Integer> rules = nFromTRule.get(c);
+            if (rules == null) {
+                return false;
+            } else {
+                cykTable[0][i] = rules.toArray(new Integer[0]);
+            }
+        }
+
+        for (int a = 1; a < n; a++){
+            for (int b = 0; b < n-a; b++){
+                HashSet<Integer> rules = new HashSet<>();
+                for (int c = 0; c < a; c++){
+                    counter++;
+                    int leftIndex = a - c - 1;
+                    int rightIndex = b + c + 1;
+                    Integer[] leftCell = cykTable[c][b];
+                    Integer[] rightCell = cykTable[leftIndex][rightIndex];
+                    if (leftCell  != null && rightCell != null) {
+                        for (int i : leftCell) {
+                            for (int j : rightCell) {
+                                if (nonTerminalsToNonTerminals[i][j] != 0) {
+                                    rules.add(nonTerminalsToNonTerminals[i][j]);
+
+                                }
+                            }
+                        }
+                    }
+                }
+                if (rules.size() > 0) {
+                    cykTable[a][b] = rules.toArray(new Integer[0]);
+                }
+            }
+        }
+
+        // Make the assumption that the start symbol is the first rule in the grammar
+        return cykTable[n-1][0] != null && Arrays.asList(cykTable[n-1][0]).contains(1);
+    }
 
 
     public boolean parseTD(String s) {
