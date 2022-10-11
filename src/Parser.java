@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.*;
 
 public class Parser {
     private final int[][][] nonTerminalToNonTerminals;
@@ -72,15 +69,32 @@ public class Parser {
     public boolean parseBUErrorCorrection(String s) {
 
         int n = s.length();
-        ParseItem[][][] cykTable = new ParseItem[n][n][];
+        List<ParseItem>[][] cykTable = new List<>[n][n];
 
+        // Add all the valid rules with error 0
         for (int i = 0; i < n; i++) {
             char c = s.charAt(i);
             ArrayList<Integer> rules = nFromTRule.get(c);
-            if (rules == null) {
-                return false;
-            } else {
-                cykTable[0][i] = rules.toArray(new Integer[0]);
+            for (int rule : rules) {
+                ParseItem item = new ParseItem("" + c,0 , rule);
+                cykTable[0][i] = new ArrayList<>();
+                cykTable[0][i].add(item);
+            }
+        }
+
+        // Add invalid rules with error 1
+        for (int i = 0; i < n; i++){
+            for (int j = 0; j < tRuleFromNRuleArray.length; j++){
+                if(!cykTable[0][i].contains(new ParseItem("", 1, j))){
+                    cykTable[0][i].add(new ParseItem(tRuleFromNRuleArray[j] + "", 1, j));
+                }
+            }
+        }
+
+        // Add lambda rules with error 1
+        for (int i = 0; i < n; i++){
+            if(!cykTable[0][i].contains(new ParseItem("", 1, -1))){
+                cykTable[0][i].add(new ParseItem("", 1, -1));
             }
         }
 
@@ -91,14 +105,13 @@ public class Parser {
                     counter++;
                     int leftIndex = a - c - 1;
                     int rightIndex = b + c + 1;
-                    Integer[] leftCell = cykTable[c][b];
-                    Integer[] rightCell = cykTable[leftIndex][rightIndex];
+                    List<ParseItem> leftCell = cykTable[c][b];
+                    List<ParseItem> rightCell = cykTable[leftIndex][rightIndex];
                     if (leftCell  != null && rightCell != null) {
                         for (int i : leftCell) {
                             for (int j : rightCell) {
                                 if (nonTerminalsToNonTerminals[i][j] != 0) {
                                     rules.add(nonTerminalsToNonTerminals[i][j]);
-
                                 }
                             }
                         }
