@@ -161,7 +161,7 @@ public class Parser {
             }
         }
         // Check if starting symbol has 0 errors, or return the starting symbol with lowest amount of errors and string etc...
-        
+
         // Make the assumption that the start symbol is the first rule in the grammar
         return cykTable[n-1][0] != null && Arrays.asList(cykTable[n-1][0]).contains(1);
     }
