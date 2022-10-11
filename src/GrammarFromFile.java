@@ -148,10 +148,6 @@ public class GrammarFromFile extends Grammar{
         }
 
 
-        HashMap<Integer, Integer> nonTerminalIndexMap;
-
-
-
         int [][][] nonTerminalToNonTerminals = new int[nRules][0][0];
         int [][] nonTerminalsToNonTerminal = new int[nRules][nRules];
 
@@ -159,12 +155,31 @@ public class GrammarFromFile extends Grammar{
             for(int j = 0; j < leftTerminals[i].length; j++){
                 int[] rule = leftTerminals[i][j];
                 int convertedN = nFromT.get((char) rule[0]).get(0);
-                nonTerminalToNonTerminals[i][]
-
+                nonTerminalToNonTerminals[i] = Arrays.copyOf(nonTerminalToNonTerminals[i],
+                        nonTerminalToNonTerminals[i].length + 1);
+                nonTerminalToNonTerminals[i][nonTerminalToNonTerminals[i].length - 1] = new int[]
+                        {convertedN, rule[1]};
+                nonTerminalsToNonTerminal[convertedN][rule[1]] = i;
             }
         }
+        for(int i = 0; i < rightTerminals.length; i++){
+            for(int j = 0; j < rightTerminals[i].length; j++){
+                int[] rule = rightTerminals[i][j];
+                int convertedN = nFromT.get((char) rule[1]).get(0);
+                nonTerminalToNonTerminals[i] = Arrays.copyOf(nonTerminalToNonTerminals[i],
+                        nonTerminalToNonTerminals[i].length + 1);
+                nonTerminalToNonTerminals[i][nonTerminalToNonTerminals[i].length - 1] = new int[]
+                        {convertedN, rule[0]};
+                nonTerminalsToNonTerminal[convertedN][rule[0]] = i;
+            }
+        }
+        String alphabet = ['ABCDEFGHIJKLMNOPQRSTUVWXYZ']
+        for(char terminal: terminalsToAdd){
+            for (char c: alphabet.toCharArray()) {
 
-
+            }
+            nonTerminalIndexMap
+        }
 
 
 
