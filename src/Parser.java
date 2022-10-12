@@ -1,17 +1,17 @@
 import java.util.*;
 
 public class Parser {
-    private final int[][][] nonTerminalToNonTerminals;
-    private final int[][] nonTerminalsToNonTerminals;
-    private final char[] tRuleFromNRuleArray;
-    private final HashMap<Character, ArrayList<Integer>> nFromTRule;
+    private final int[][][] leftToRight;
+    private final int[][] rightToLeft;
+    private final char[] tFromNT;
+    private final HashMap<Character, ArrayList<Integer>> nFromT;
     private final int ruleCount;
     private int counter;
     Parser(Grammar grammar){
-        this.nonTerminalToNonTerminals =  grammar.getArraysFromNRuleArray();
-        this.nonTerminalsToNonTerminals = grammar.getRuleFromArray();
-        this.tRuleFromNRuleArray = grammar.getTRuleFromNRuleArray();
-        this.nFromTRule = grammar.getNFromT();
+        this.leftToRight =  grammar.getArraysFromNRuleArray();
+        this.rightToLeft = grammar.getRuleFromArray();
+        this.tFromNT = grammar.getTRuleFromNRuleArray();
+        this.nFromT = grammar.getNFromT();
         this.ruleCount = grammar.getRuleCount();
         counter = 0;
     }
@@ -29,7 +29,7 @@ public class Parser {
 
         for (int i = 0; i < n; i++) {
             char c = s.charAt(i);
-            ArrayList<Integer> rules = nFromTRule.get(c);
+            ArrayList<Integer> rules = nFromT.get(c);
             if (rules == null) {
                     return false;
             } else {
@@ -49,8 +49,8 @@ public class Parser {
                     if (leftCell  != null && rightCell != null) {
                         for (int i : leftCell) {
                             for (int j : rightCell) {
-                                if (nonTerminalsToNonTerminals[i][j] != 0) {
-                                    rules.add(nonTerminalsToNonTerminals[i][j]);
+                                if (rightToLeft[i][j] != 0) {
+                                    rules.add(rightToLeft[i][j]);
                                 }
                             }
                         }
@@ -73,7 +73,7 @@ public class Parser {
         // Add all the valid rules with error 0
         for (int i = 0; i < n; i++) {
             char c = s.charAt(i);
-            ArrayList<Integer> rules = nFromTRule.get(c);
+            ArrayList<Integer> rules = nFromT.get(c);
             for (int rule : rules) {
                 ParseItem item = new ParseItem("" + c,0 , rule);
                 cykTable[0][i] = new HashMap<>();
@@ -83,9 +83,9 @@ public class Parser {
 
         // Add invalid rules with error 1
         for (int i = 0; i < n; i++){
-            for (int j = 0; j < tRuleFromNRuleArray.length; j++){
+            for (int j = 0; j < tFromNT.length; j++){
                 if(!cykTable[0][i].containsKey(j)){
-                    cykTable[0][i].put(j, new ParseItem(tRuleFromNRuleArray[j] + "", 1, j));
+                    cykTable[0][i].put(j, new ParseItem(tFromNT[j] + "", 1, j));
                 }
             }
         }
@@ -143,9 +143,9 @@ public class Parser {
                                 continue;
                             }
                             // Case where none of the items are lambda
-                            if (nonTerminalsToNonTerminals[leftItem.nonTerminalIndex][rightItem.nonTerminalIndex] != 0) {
+                            if (rightToLeft[leftItem.nonTerminalIndex][rightItem.nonTerminalIndex] != 0) {
                                 int error = leftItem.numberOfErrors + rightItem.numberOfErrors;
-                                int ntIndex = nonTerminalsToNonTerminals[leftItem.nonTerminalIndex][rightItem.nonTerminalIndex];
+                                int ntIndex = rightToLeft[leftItem.nonTerminalIndex][rightItem.nonTerminalIndex];
                                 ParseItem currentItem = cykTable[a][b].get(ntIndex);
                                 if (currentItem == null) {
                                     cykTable[a][b].put(leftItem.nonTerminalIndex, new ParseItem(leftItem.parseString, error, ntIndex));
@@ -187,10 +187,10 @@ public class Parser {
             return table[start][end][nonTerminal];
         }
         if (start == end - 1) {
-            table[start][end][nonTerminal] = tRuleFromNRuleArray[nonTerminal] == s[start];
+            table[start][end][nonTerminal] = tFromNT[nonTerminal] == s[start];
             return table[start][end][nonTerminal];
         } else {
-            int [][] rules = nonTerminalToNonTerminals[nonTerminal];
+            int [][] rules = leftToRight[nonTerminal];
             for (int[] rule : rules) {
                 for (int i = start + 1; i < end; i++) {
                     if(parseTD(rule[0], start, i, s, table) && parseTD(rule[1], i, end, s, table)){
@@ -217,10 +217,10 @@ public class Parser {
     public boolean parseNaive(int nonTerminal, int start, int end, char [] s){
         counter++;
         if(start == end - 1){
-            return tRuleFromNRuleArray[nonTerminal] == s[start];
+            return tFromNT[nonTerminal] == s[start];
         }
         else{
-                int [][] rules = nonTerminalToNonTerminals[nonTerminal];
+            int [][] rules = leftToRight[nonTerminal];
             for (int[] rule : rules) {
                 for (int i = start + 1; i < end; i++) {
                     if (parseNaive(rule[0], start, i, s) && parseNaive(rule[1], i, end, s)) {

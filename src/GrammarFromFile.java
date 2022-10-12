@@ -2,25 +2,27 @@ import java.util.*;
 
 public class GrammarFromFile extends Grammar{
 
-    int [][][] nonTerminalToNonTerminals;
-    int [][] nonTerminalsToNonTerminal;
+    int [][][] leftToRight;
+    int [][] rightToLeft;
     char [] tFromN;
     HashMap<Character, ArrayList<Integer>> nFromT;
-    HashMap<Integer, Integer> nonTerminalIndexMap;
+    HashMap<Character, Integer> NTIndex;
     public int ruleCount;
 
     ArrayList<String> rules;
 
     private GrammarFromFile(int ruleCount,
-                            HashMap<Integer, Integer> nonTerminalIndexMap,
-                            int[][][] nonTerminalToNonTerminals,
-                            int[][] nonTerminalsToNonTerminal, char[] tFromN,
-                            HashMap<Character, ArrayList<Integer>> nFromT){
+                            HashMap<Character, Integer> nonTerminalIndexMap,
+                            int[][][] leftToRight,
+                            int[][] rightToLeft,
+                            char[] tFromN,
+                            HashMap<Character,
+                            ArrayList<Integer>> nFromT){
 
         this.ruleCount = ruleCount;
-        this.nonTerminalIndexMap = nonTerminalIndexMap;
-        this.nonTerminalToNonTerminals = nonTerminalToNonTerminals;
-        this.nonTerminalsToNonTerminal = nonTerminalsToNonTerminal;
+        this.NTIndex = nonTerminalIndexMap;
+        this.leftToRight = leftToRight;
+        this.rightToLeft = rightToLeft;
         this.nFromT = nFromT;
         this.tFromN = tFromN;
 
@@ -30,7 +32,7 @@ public class GrammarFromFile extends Grammar{
     public GrammarFromFile(Scanner input) {
         ruleCount = 1;
         rules = new ArrayList<>();
-        nonTerminalIndexMap = new HashMap<>();
+        NTIndex = new HashMap<>();
         nFromT = new HashMap<>();
 
 
@@ -38,17 +40,17 @@ public class GrammarFromFile extends Grammar{
             String data = input.nextLine();
             for (char c: data.toCharArray()) {
                 if (Character.isUpperCase(c)) {
-                    if (!nonTerminalIndexMap.containsKey((int) c)) {
-                        nonTerminalIndexMap.put((int) c, ruleCount);
+                    if (!NTIndex.containsKey(c)) {
+                        NTIndex.put(c, ruleCount);
                         ruleCount++;
                     }
                 }
             }
             rules.add(data);
         }
-        nonTerminalToNonTerminals = new int[ruleCount][0][0];
+        leftToRight = new int[ruleCount][0][0];
         tFromN = new char[ruleCount];
-        nonTerminalsToNonTerminal = new int[ruleCount][ruleCount];
+        rightToLeft = new int[ruleCount][ruleCount];
 
         for (String rule : rules) {
             String [] split = rule.split("\\s+");
@@ -59,25 +61,25 @@ public class GrammarFromFile extends Grammar{
             // Non-terminal rule
             if(Character.isUpperCase(outputOne)){
 
-                int index = nonTerminalIndexMap.get((int) inputOne);
-                nonTerminalToNonTerminals[index] = Arrays.copyOf(nonTerminalToNonTerminals[index],
-                        nonTerminalToNonTerminals[index].length + 1);
+                int index = this.NTIndex.get(inputOne);
+                leftToRight[index] = Arrays.copyOf(leftToRight[index],
+                        leftToRight[index].length + 1);
 
                 if (split[1].length() == 2){
                     char outputTwo = split[1].charAt(1);
-                    nonTerminalToNonTerminals[index][nonTerminalToNonTerminals[index].length - 1] = new int[]
-                            {nonTerminalIndexMap.get((int) outputOne), nonTerminalIndexMap.get((int) outputTwo)};
+                    leftToRight[index][leftToRight[index].length - 1] = new int[]
+                            {this.NTIndex.get(outputOne), this.NTIndex.get(outputTwo)};
 
-                    nonTerminalsToNonTerminal[nonTerminalIndexMap.get((int) outputOne)][nonTerminalIndexMap.get((int) outputTwo)] = index;
+                    rightToLeft[this.NTIndex.get(outputOne)][this.NTIndex.get(outputTwo)] = index;
                 } else {
-                    nonTerminalsToNonTerminal[nonTerminalIndexMap.get((int) outputOne)][0] = index;
-                    nonTerminalToNonTerminals[index][nonTerminalToNonTerminals[index].length - 1] =
-                            new int[] {nonTerminalIndexMap.get((int) outputOne)};
+                    rightToLeft[this.NTIndex.get(outputOne)][0] = index;
+                    leftToRight[index][leftToRight[index].length - 1] =
+                            new int[] {this.NTIndex.get(outputOne)};
                 }
 
             // Terminal rule
             } else {
-                int index = nonTerminalIndexMap.get((int) inputOne);
+                int index = this.NTIndex.get(inputOne);
                 tFromN[index] = outputOne;
             }
         }
@@ -90,10 +92,11 @@ public class GrammarFromFile extends Grammar{
     }
 
     public static GrammarFromFile fromLinearGrammar(LinearGrammarFromFile linearGrammar){
-        HashMap<Integer, Integer> nonTerminalIndexMap = linearGrammar.getNonTerminalIndexMap();
+
+        HashMap<Character, Integer> NTIndex = linearGrammar.getNTIndex();
         char[] terminals = linearGrammar.getTerminal();
         int [][][] leftTerminals = linearGrammar.getLeftTerminal();
-        int [][][] rightTerminals = linearGrammar.getLeftTerminal();
+        int [][][] rightTerminals = linearGrammar.getRightTerminal();
         int nRules = linearGrammar.getRuleCount();
         HashMap<Character, Integer> terminalIndexMap = new HashMap<>();
         HashSet<Character> terminalsToAdd = new HashSet<>();
@@ -134,32 +137,33 @@ public class GrammarFromFile extends Grammar{
         HashMap<Character, ArrayList<Integer>> nFromT =  new HashMap<>();
 
         char[] tFromN = Arrays.copyOf(terminals,
-                terminals.length + terminalsToAdd.size());
+                terminals.length + terminalsToAdd.size() + 1);
 
         for (char terminal: terminalsToAdd) {
             nRules++;
             tFromN[nRules] = terminal;
         }
 
-        for (int i = 0; i < terminals.length; i++){
+        for (int i = 0; i < tFromN.length; i++){
             ArrayList<Integer> newList = new ArrayList<>();
             newList.add(i);
-            nFromT.put(terminals[i], newList);
+            nFromT.put(tFromN[i], newList);
         }
 
 
         int [][][] nonTerminalToNonTerminals = new int[nRules][0][0];
-        int [][] nonTerminalsToNonTerminal = new int[nRules][nRules];
+        int [][] nonTerminalsToNonTerminal = new int[nRules+1][nRules+1];
 
         for(int i = 0; i < leftTerminals.length; i++){
             for(int j = 0; j < leftTerminals[i].length; j++){
                 int[] rule = leftTerminals[i][j];
-                int convertedN = nFromT.get((char) rule[0]).get(0);
+                ArrayList<Integer> convertedN = nFromT.get((char) rule[0]);
+                Integer nonTerminal = convertedN.get(0);
                 nonTerminalToNonTerminals[i] = Arrays.copyOf(nonTerminalToNonTerminals[i],
                         nonTerminalToNonTerminals[i].length + 1);
                 nonTerminalToNonTerminals[i][nonTerminalToNonTerminals[i].length - 1] = new int[]
-                        {convertedN, rule[1]};
-                nonTerminalsToNonTerminal[convertedN][rule[1]] = i;
+                        {nonTerminal, rule[1]};
+                nonTerminalsToNonTerminal[nonTerminal][rule[1]] = i;
             }
         }
         for(int i = 0; i < rightTerminals.length; i++){
@@ -169,20 +173,24 @@ public class GrammarFromFile extends Grammar{
                 nonTerminalToNonTerminals[i] = Arrays.copyOf(nonTerminalToNonTerminals[i],
                         nonTerminalToNonTerminals[i].length + 1);
                 nonTerminalToNonTerminals[i][nonTerminalToNonTerminals[i].length - 1] = new int[]
-                        {convertedN, rule[0]};
-                nonTerminalsToNonTerminal[convertedN][rule[0]] = i;
+                        {rule[0], convertedN};
+                nonTerminalsToNonTerminal[rule[0]][convertedN] = i;
             }
         }
-        String alphabet = ['ABCDEFGHIJKLMNOPQRSTUVWXYZ']
-        for(char terminal: terminalsToAdd){
-            for (char c: alphabet.toCharArray()) {
 
+        String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+        for(int i = 1; i < tFromN.length; i++){
+            if(!NTIndex.containsValue(i)){
+                for (char c: alphabet.toCharArray()) {
+                    if(!NTIndex.containsKey(c)){
+                        NTIndex.put(c, i);
+                        break;
+                    }
+                }
             }
-            nonTerminalIndexMap
         }
-
-
-
+        return new GrammarFromFile(nRules, NTIndex, nonTerminalToNonTerminals, nonTerminalsToNonTerminal, tFromN, nFromT);
     }
 
     public char[] getTRuleFromNRuleArray() {
@@ -194,13 +202,13 @@ public class GrammarFromFile extends Grammar{
     }
 
     public int[][][] getArraysFromNRuleArray(){
-        return nonTerminalToNonTerminals;
+        return leftToRight;
     }
 
     @Override
     // Will return 0 if not found.
     public int[][] getRuleFromArray() {
-        return nonTerminalsToNonTerminal;
+        return rightToLeft;
     }
     public HashMap<Character, ArrayList<Integer>> getNFromT(){
         return nFromT;

@@ -1,5 +1,3 @@
-import jdk.dynalink.beans.StaticClass;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -12,21 +10,21 @@ public class LinearGrammarFromFile{
     int[][][] leftTerminal;
     int[][][] rightTerminal;
 
-    HashMap<Integer, Integer> nonTerminalIndexMap;
+    HashMap<Character, Integer> NTIndex;
     ArrayList<String> rules;
     public int ruleCount;
 
     public LinearGrammarFromFile(Scanner input) {
         ruleCount = 1;
         rules = new ArrayList<>();
-        nonTerminalIndexMap = new HashMap<>();
+        NTIndex = new HashMap<>();
 
         while (input.hasNextLine()) {
             String data = input.nextLine();
             for (char c: data.toCharArray()) {
                 if (Character.isUpperCase(c)) {
-                    if (!nonTerminalIndexMap.containsKey((int) c)) {
-                        nonTerminalIndexMap.put((int) c, ruleCount);
+                    if (!NTIndex.containsKey(c)) {
+                        NTIndex.put(c, ruleCount);
                         ruleCount++;
                     }
                 }
@@ -43,7 +41,7 @@ public class LinearGrammarFromFile{
 
             char nonTerminal = split[0].charAt(0);
             char charOne = split[1].charAt(0);
-            int index = nonTerminalIndexMap.get((int) nonTerminal);
+            int index = NTIndex.get(nonTerminal);
 
             if (split[1].length() == 1) {
                 terminal[index] = charOne;
@@ -53,18 +51,18 @@ public class LinearGrammarFromFile{
                     leftTerminal[index] = Arrays.copyOf(leftTerminal[index],
                             leftTerminal[index].length + 1);
                     leftTerminal[index][leftTerminal[index].length - 1] =
-                            new int[]{(int) charOne, nonTerminalIndexMap.get((int) charTwo)};
+                            new int[]{(int) charOne, NTIndex.get(charTwo)};
                 } else {
                     rightTerminal[index] = Arrays.copyOf(rightTerminal[index],
                             rightTerminal[index].length + 1);
                     rightTerminal[index][rightTerminal[index].length - 1] =
-                            new int[]{nonTerminalIndexMap.get((int) charOne), (int) charTwo};
+                            new int[]{NTIndex.get(charOne), (int) charTwo};
                 }
             }
         }
     }
-    public HashMap<Integer, Integer> getNonTerminalIndexMap(){
-        return nonTerminalIndexMap;
+    public HashMap<Character, Integer> getNTIndex(){
+        return NTIndex;
     }
 
     public char[] getTerminal() {
