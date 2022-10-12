@@ -1,12 +1,9 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Scanner;
+import java.util.*;
 
 public class LinearGrammarFromFile{
 
 
-    char[] terminal;
+    HashMap<Integer, List<Character>> terminal;
     int[][][] leftTerminal;
     int[][][] rightTerminal;
 
@@ -15,7 +12,7 @@ public class LinearGrammarFromFile{
     public int ruleCount;
 
     public LinearGrammarFromFile(Scanner input) {
-        ruleCount = 1;
+        ruleCount = 0;
         rules = new ArrayList<>();
         NTIndex = new HashMap<>();
 
@@ -32,7 +29,7 @@ public class LinearGrammarFromFile{
             rules.add(data);
         }
 
-        terminal = new char[ruleCount];
+        terminal = new HashMap<>();
         leftTerminal = new int[ruleCount][0][0];
         rightTerminal = new int[ruleCount][0][0];
 
@@ -43,9 +40,8 @@ public class LinearGrammarFromFile{
             char charOne = split[1].charAt(0);
             int index = NTIndex.get(nonTerminal);
 
-            if (split[1].length() == 1) {
-                terminal[index] = charOne;
-            } else {
+            if (split[1].length() == 2) {
+
                 char charTwo = split[1].charAt(1);
                 if (Character.isLowerCase(charOne)) {
                     leftTerminal[index] = Arrays.copyOf(leftTerminal[index],
@@ -58,6 +54,14 @@ public class LinearGrammarFromFile{
                     rightTerminal[index][rightTerminal[index].length - 1] =
                             new int[]{NTIndex.get(charOne), (int) charTwo};
                 }
+                continue;
+            }
+            if(terminal.containsKey(index)){
+                terminal.get(index).add(charOne);
+            } else {
+                List<Character> list = new ArrayList<>();
+                list.add(charOne);
+                terminal.put(index, list);
             }
         }
     }
@@ -65,7 +69,7 @@ public class LinearGrammarFromFile{
         return NTIndex;
     }
 
-    public char[] getTerminal() {
+    public HashMap<Integer, List<Character>> getTerminal() {
         return terminal;
     }
 

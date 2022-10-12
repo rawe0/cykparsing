@@ -1,5 +1,8 @@
+import java.util.HashMap;
+import java.util.List;
+
 public class LinearParser {
-    private final char[] terminals;
+    private final HashMap<Integer, List<Character>> terminals;
     private final int [][][] leftTerminals;
     private final int [][][] rightTerminals;
     private final int ruleCount;
@@ -31,7 +34,7 @@ public class LinearParser {
             }
         }
         // Assume that the first Non-terminal is the start symbol
-        return parseLinearTD(1, 0, n, string, table);
+        return parseLinearTD(0, 0, n, string, table);
     }
     public boolean parseLinearTD(int nonTerminal, int start, int end, char [] s, Boolean[][][] table){
         counter++;
@@ -39,8 +42,12 @@ public class LinearParser {
             return table[start][end][nonTerminal];
         }
         if (start == end - 1) {
-            table[start][end][nonTerminal] = terminals[nonTerminal] == s[start];
-            return table[start][end][nonTerminal];
+            if(terminals.get(nonTerminal) != null){
+                table[start][end][nonTerminal] = terminals.get(nonTerminal).contains(s[start]);
+                return table[start][end][nonTerminal];
+            }
+            table[start][end][nonTerminal] = false;
+            return false;
         } else {
             int [][] leftRules = leftTerminals[nonTerminal];
             for (int[] rule : leftRules) {

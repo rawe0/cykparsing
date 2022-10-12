@@ -160,7 +160,7 @@ public class Main {
      * @param nRuns number of test runs per string
      * @return an array of the results
      */
-    private static String[][] runTest(String[] testStrings, Grammar g, Parser parser,
+    private static String[][] runTest(String[] testStrings, GrammarFromFile g, Parser parser,
                                       String parseMethod, int nLengths, int nRuns){
         long[] counter = {0};
         String [][] result = new String[nLengths][nRuns];

@@ -32,11 +32,11 @@ public class LinearMain {
             for (String s: stringArray) {
                 System.out.println(parser.parseLinearTD(s));
             }
-            GrammarFromFile CNFGrammar = GrammarFromFile.fromLinearGrammar(grammar);
 
+            GrammarFromFile CNFGrammar = GrammarFromFile.fromLinearGrammar(grammar);
             Parser CNFParser = new Parser(CNFGrammar);
             for (String s: stringArray) {
-                System.out.println(CNFParser.parseBU(s));
+                System.out.println(CNFParser.parseBUErrorCorrection(s));
             }
 
         } else {

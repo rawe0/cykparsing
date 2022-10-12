@@ -10,7 +10,7 @@ public class ParseItem {
 
     @Override
     public String toString() {
-        return parseString + ", " + numberOfErrors + ", " + nonTerminalIndex;
+        return "\nString: " + parseString + "\nCorrections: " + numberOfErrors + "\nStarting terminal: " + nonTerminalIndex + "\n";
     }
 
     public ParseItem(String parseString, int numberOfErrors, int nonTerminalIndex){
