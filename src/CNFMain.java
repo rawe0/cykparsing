@@ -6,7 +6,7 @@ import java.util.Scanner;
 /**
  * Main class to simply run the scripts one by one
  */
-public class MainTwo {
+public class CNFMain {
     public static void main(String[] args) throws IOException {
 
         if (args.length == 4) {
@@ -103,6 +103,9 @@ public class MainTwo {
                 case "N":
                     parser.parseNaive(testStrings[l]);
                     break;
+                case "BU_EC":
+                    parser.parseBUErrorCorrection(testStrings[l]);
+                    break;
             }
 
             // Real runs
@@ -124,6 +127,9 @@ public class MainTwo {
                         break;
                     case "N":
                         parser.parseNaive(testStrings[l]);
+                        break;
+                    case "BU_EC":
+                        parser.parseBUErrorCorrection(testStrings[l]);
                         break;
                 }
 

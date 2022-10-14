@@ -13,6 +13,8 @@ public class LinearMain {
 
             String grammarLocation = args[0];
             String stringLocation = args[1];
+            String parseMethod = args[2];
+            int n = Integer.parseInt(args[3]);
 
             File grammarFile = new File(grammarLocation);
             File stringFile = new File(stringLocation);
@@ -20,24 +22,22 @@ public class LinearMain {
             Scanner grammarInput = new Scanner(grammarFile);
             Scanner stringInput = new Scanner(stringFile);
 
-            LinearGrammarFromFile grammar = new LinearGrammarFromFile(grammarInput);
-            ArrayList<String> strings = new ArrayList<>();
 
-            LinearParser parser = new LinearParser(grammar);
+            LinearGrammarFromFile grammar = new LinearGrammarFromFile(grammarInput);
+            LinearParser linearParser = new LinearParser(grammar);
+
+            GrammarFromFile CNFGrammar = GrammarFromFile.fromLinearGrammar(grammar);
+            Parser CNFParser = new Parser(CNFGrammar);
+
+            ArrayList<String> strings = new ArrayList<>();
 
             while (stringInput.hasNextLine()) {
                 strings.add(stringInput.nextLine());
             }
             String[] stringArray = strings.toArray(new String[0]);
-            for (String s: stringArray) {
-                System.out.println(parser.parseLinearTD(s));
-            }
 
-            GrammarFromFile CNFGrammar = GrammarFromFile.fromLinearGrammar(grammar);
-            Parser CNFParser = new Parser(CNFGrammar);
-            for (String s: stringArray) {
-                System.out.println(CNFParser.parseBUErrorCorrection(s));
-            }
+            runTest(stringArray, CNFParser, linearParser, parseMethod, stringArray.length, n);
+
 
         } else {
             System.out.println("Please provide 04arguments" +
@@ -53,13 +53,13 @@ public class LinearMain {
      *
      * @param testStrings The test strings
      * @param g The grammar
-     * @param parser The parser
+     * @param CNFparser The CNFparser
      * @param parseMethod The parsing method
      * @param nStrings number of test strings
      * @param nRuns number of test runs per string
      * @return an array of the results
      */
-    private static String[][] runTest(String[] testStrings, Parser parser,
+    private static String[][] runTest(String[] testStrings, Parser CNFparser, LinearParser linearParser,
                                       String parseMethod, int nStrings, int nRuns){
 
         String [][] result = new String[nStrings][nRuns];
@@ -67,18 +67,21 @@ public class LinearMain {
         for(int l = 0; l < nStrings; l++){
 
             // Reset counter
-            parser.resetCounter();
+            CNFparser.resetCounter();
 
             // Dry run
             switch (parseMethod) {
+                case "TD_L":
+                    linearParser.parseLinearTD(testStrings[l]);
+                    break;
                 case "BU":
-                    parser.parseBU(testStrings[l]);
+                    CNFparser.parseBU(testStrings[l]);
                     break;
                 case "TD":
-                    parser.parseTD(testStrings[l]);
+                    CNFparser.parseTD(testStrings[l]);
                     break;
                 case "N":
-                    parser.parseNaive(testStrings[l]);
+                    CNFparser.parseNaive(testStrings[l]);
                     break;
             }
 
@@ -89,18 +92,21 @@ public class LinearMain {
                 long startTime = System.nanoTime();
 
                 // Reset counter
-                parser.resetCounter();
+                CNFparser.resetCounter();
 
                 // Parse grammar
                 switch (parseMethod) {
+                    case "TD_L":
+                        linearParser.parseLinearTD(testStrings[l]);
+                        break;
                     case "BU":
-                        parser.parseBU(testStrings[l]);
+                        CNFparser.parseBU(testStrings[l]);
                         break;
                     case "TD":
-                        parser.parseTD(testStrings[l]);
+                        CNFparser.parseTD(testStrings[l]);
                         break;
                     case "N":
-                        parser.parseNaive(testStrings[l]);
+                        CNFparser.parseNaive(testStrings[l]);
                         break;
                 }
 
@@ -109,7 +115,7 @@ public class LinearMain {
                 long totalTime = endTime - startTime;
 
                 // Store result
-                result[l][i] = String.format("%d, %d, %d, %d",testStrings[l].length(), (i+1), totalTime, parser.getCount());
+                result[l][i] = String.format("%d, %d, %d, %d",testStrings[l].length(), (i+1), totalTime, CNFparser.getCount());
                 System.out.println(result[l][i]);
             }
         }

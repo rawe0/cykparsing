@@ -5,7 +5,7 @@ import java.io.InputStream;
 import java.util.Scanner;
 
 
-public class Main {
+public class OldMain {
 
     public static final String ANSI_RESET = "\u001B[0m";
     public static final String ANSI_RED = "\u001B[31m";
@@ -52,8 +52,8 @@ public class Main {
         String[] COCStrings = new String[nLengths];
         String[] OOCStrings = new String[nLengths];
 
-        InputStream SGFile = Main.class.getClassLoader().getResourceAsStream("stupid.txt");
-        InputStream WPBFile = Main.class.getClassLoader().getResourceAsStream("well_balanced_parenthesis.txt");
+        InputStream SGFile = OldMain.class.getClassLoader().getResourceAsStream("stupid.txt");
+        InputStream WPBFile = OldMain.class.getClassLoader().getResourceAsStream("well_balanced_parenthesis.txt");
 
         assert SGFile != null;
         Scanner SGReader = new Scanner(SGFile);
