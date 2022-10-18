@@ -88,8 +88,11 @@ public class Parser {
         // Add invalid rules with error 1
         for (int i = 0; i < n; i++){
             for (Integer key: tFromNT.keySet()) {
-                if(!cykTable[0][i].containsKey(key)){
-                    cykTable[0][i].put(key, new ParseItem(tFromNT.get(key).get(0) + "", 1, key));
+                List<Character> terminals = tFromNT.get(key);
+                if(terminals.size() != 0){
+                    if(!cykTable[0][i].containsKey(key)){
+                        cykTable[0][i].put(key, new ParseItem(terminals.get(0) + "", 1, key));
+                    }
                 }
             }
         }

@@ -60,7 +60,7 @@ public class GrammarFromFile{
 
         for (String rule : rules) {
 
-            String [] split = rule.split("\\s+");
+            String[] split = rule.split("\\s+");
 
             char outputOne = split[1].charAt(0);
             char input = split[0].charAt(0);
@@ -69,7 +69,7 @@ public class GrammarFromFile{
             int index = this.NTIndex.get(input);
 
             // Non-terminal rule
-            if(Character.isUpperCase(outputOne)){
+            if (Character.isUpperCase(outputOne)) {
 
                 // Must have two productions since it's a non-terminal
                 char outputTwo = split[1].charAt(1);
@@ -94,7 +94,7 @@ public class GrammarFromFile{
             tFromN.get(index).add(outputOne);
 
             // Add non-terminal to the list of non-terminals for the terminal
-            if(!nFromT.containsKey(outputOne)){
+            if (!nFromT.containsKey(outputOne)) {
                 nFromT.put(outputOne, new ArrayList<>());
             }
             nFromT.get(outputOne).add(index);

@@ -38,30 +38,6 @@ public class CNFMain {
             grammarInput.close();
             stringInput.close();
 
-        } else if (args.length == 5) {
-            String grammarLocation = args[0];
-            String stringLocation = args[1];
-
-            File grammarFile = new File(grammarLocation);
-            File stringFile = new File(stringLocation);
-
-            Scanner grammarInput = new Scanner(grammarFile);
-            Scanner stringInput = new Scanner(stringFile);
-
-            LinearGrammarFromFile grammar = new LinearGrammarFromFile(grammarInput);
-            ArrayList<String> strings = new ArrayList<>();
-
-            LinearParser parser = new LinearParser(grammar);
-
-            while (stringInput.hasNextLine()) {
-                strings.add(stringInput.nextLine());
-            }
-            String[] stringArray = strings.toArray(new String[0]);
-            for (String s: stringArray) {
-                System.out.println(parser.parseLinearTD(s));
-            }
-
-
         } else {
             System.out.println("Please provide 04arguments" +
                     "\nUsage: <Input file for grammar to run>" +
