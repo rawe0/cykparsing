@@ -6,7 +6,7 @@ public class LinearParser {
     private final int [][][] leftTerminals;
     private final int [][][] rightTerminals;
     private final int ruleCount;
-    private int counter;
+    private long counter;
 
     LinearParser(LinearGrammarFromFile grammar){
         this.leftTerminals =  grammar.getLeftTerminal();
@@ -19,7 +19,7 @@ public class LinearParser {
     public void resetCounter(){
         counter = 0;
     }
-    public int getCount(){
+    public long getCount(){
         return counter;
     }
     public boolean parseLinearTD(String s) {

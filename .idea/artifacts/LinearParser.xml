@@ -1,6 +1,6 @@
 <component name="ArtifactManager">
-  <artifact type="jar" name="cykparsing:jar">
-    <output-path>$PROJECT_DIR$/out/artifacts/cykparsing_jar</output-path>
+  <artifact type="jar" name="LinearParser">
+    <output-path>$PROJECT_DIR$/out/artifacts/LinearParser</output-path>
     <root id="archive" name="cykparsing.jar">
       <element id="module-output" name="cykparsing" />
     </root>

@@ -7,7 +7,7 @@ public class Parser {
     private final HashMap<Character, List<Integer>> nFromT;
     private final int ruleCount;
     private final HashMap<Character, Integer> NTIndex;
-    private int counter;
+    private long counter;
     Parser(GrammarFromFile grammar){
         this.leftToRight =  grammar.getArraysFromNRuleArray();
         this.rightToLeft = grammar.getRuleFromArray();
@@ -20,7 +20,7 @@ public class Parser {
     public void resetCounter(){
         counter = 0;
     }
-    public int getCount(){
+    public long getCount(){
         return counter;
     }
 
@@ -67,20 +67,19 @@ public class Parser {
         // Make the assumption that the start symbol is the first rule in the grammar
         return cykTable[n-1][0] != null && Arrays.asList(cykTable[n-1][0]).contains(0);
     }
-    public boolean parseBUErrorCorrection(String s) {
+    public boolean parseBUErrorCorrection(String s, Boolean silence) {
 
         int n = s.length();
         HashMap<Integer, ParseItem>[][] cykTable = new HashMap[n][n];
 
         // Add all the valid rules with error 0
         for (int i = 0; i < n; i++) {
+            cykTable[0][i] = new HashMap<>();
             char c = s.charAt(i);
             List<Integer> rules = nFromT.get(c);
+            if(rules == null) continue;
             for (int rule : rules) {
                 ParseItem item = new ParseItem("" + c,0 , rule);
-                if(cykTable[0][i] == null){
-                    cykTable[0][i] = new HashMap<>();
-                }
                 cykTable[0][i].put(rule, item);
             }
         }
@@ -171,10 +170,15 @@ public class Parser {
         // Check if starting symbol has 0 errors, or return the starting symbol with lowest amount of errors and string etc...
 
         // Make the assumption that the start symbol is the first rule in the grammar
-        if(cykTable[n-1][0].get(0).numberOfErrors != 0){
-            System.out.println(cykTable[n-1][0].get(0).toString());
+        ParseItem startSymbol = cykTable[n-1][0].get(0);
+        if(startSymbol == null){
+            return false;
         }
-        return cykTable[n-1][0].get(0).numberOfErrors == 0;
+
+        if(!silence && startSymbol.numberOfErrors != 0){
+            System.out.println(startSymbol);
+        }
+        return startSymbol.numberOfErrors == 0;
     }
 
 

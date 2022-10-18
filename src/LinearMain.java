@@ -53,13 +53,13 @@ public class LinearMain {
      *
      * @param testStrings The test strings
      * @param g The grammar
-     * @param CNFparser The CNFparser
+     * @param CNFParser The CNFParser
      * @param parseMethod The parsing method
      * @param nStrings number of test strings
      * @param nRuns number of test runs per string
      * @return an array of the results
      */
-    private static String[][] runTest(String[] testStrings, Parser CNFparser, LinearParser linearParser,
+    private static String[][] runTest(String[] testStrings, Parser CNFParser, LinearParser linearParser,
                                       String parseMethod, int nStrings, int nRuns){
 
         String [][] result = new String[nStrings][nRuns];
@@ -67,21 +67,21 @@ public class LinearMain {
         for(int l = 0; l < nStrings; l++){
 
             // Reset counter
-            CNFparser.resetCounter();
-
+            CNFParser.resetCounter();
+            linearParser.resetCounter();
             // Dry run
             switch (parseMethod) {
                 case "TD_L":
                     linearParser.parseLinearTD(testStrings[l]);
                     break;
-                case "BU":
-                    CNFparser.parseBU(testStrings[l]);
+                case "BU_C":
+                    CNFParser.parseBU(testStrings[l]);
                     break;
-                case "TD":
-                    CNFparser.parseTD(testStrings[l]);
+                case "TD_C":
+                    CNFParser.parseTD(testStrings[l]);
                     break;
-                case "N":
-                    CNFparser.parseNaive(testStrings[l]);
+                case "N_C":
+                    CNFParser.parseNaive(testStrings[l]);
                     break;
             }
 
@@ -91,22 +91,23 @@ public class LinearMain {
                 // Reset counter and start time
                 long startTime = System.nanoTime();
 
-                // Reset counter
-                CNFparser.resetCounter();
+                // Reset counters
+                CNFParser.resetCounter();
+                linearParser.resetCounter();
 
                 // Parse grammar
                 switch (parseMethod) {
                     case "TD_L":
                         linearParser.parseLinearTD(testStrings[l]);
                         break;
-                    case "BU":
-                        CNFparser.parseBU(testStrings[l]);
+                    case "BU_C":
+                        CNFParser.parseBU(testStrings[l]);
                         break;
-                    case "TD":
-                        CNFparser.parseTD(testStrings[l]);
+                    case "TD_C":
+                        CNFParser.parseTD(testStrings[l]);
                         break;
-                    case "N":
-                        CNFparser.parseNaive(testStrings[l]);
+                    case "N_C":
+                        CNFParser.parseNaive(testStrings[l]);
                         break;
                 }
 
@@ -114,8 +115,14 @@ public class LinearMain {
                 long endTime   = System.nanoTime();
                 long totalTime = endTime - startTime;
 
+                long count; // Number of operations
+                if(parseMethod.equals("TD_L")){
+                    count = linearParser.getCount();
+                } else {
+                    count = CNFParser.getCount();
+                }
                 // Store result
-                result[l][i] = String.format("%d, %d, %d, %d",testStrings[l].length(), (i+1), totalTime, CNFparser.getCount());
+                result[l][i] = String.format("%d, %d, %d, %d",testStrings[l].length(), (i+1), totalTime, count);
                 System.out.println(result[l][i]);
             }
         }

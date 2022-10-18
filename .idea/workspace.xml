@@ -1,0 +1,607 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="CNFParser" />
+      <artifact name="LinearParser" />
+    </artifacts-to-build>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="8a03a729-3bbf-419e-becb-160a55980816" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/wbpstrings.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/cykparsing_jar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/CNFParser.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/cykparsing_jar2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/LinearParser.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/CNFMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/CNFMain.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/LinearMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/LinearMain.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/LinearParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/LinearParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Parser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/string_generator.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_runner.sh" beforeDir="false" afterPath="$PROJECT_DIR$/test_runner.sh" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>ruleCount</find>
+      <find>rules</find>
+      <find>input</find>
+    </findStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/test_runner.sh" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/LinearGrammarFromFile.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/GrammarFromFile.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Parser.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/linear_grammar.txt" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/linear_input_strings.txt" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/LinearParser.java" root0="FORCE_HIGHLIGHTING" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/grammars/well_balanced_parenthesis.txt" />
+        <option value="$PROJECT_DIR$/src/GrammarFromFile.java" />
+        <option value="$PROJECT_DIR$/src/linear_grammar.txt" />
+        <option value="$PROJECT_DIR$/src/linear_input_strings.txt" />
+        <option value="$PROJECT_DIR$/src/Parser.java" />
+        <option value="$PROJECT_DIR$/src/LinearGrammar.java" />
+        <option value="$PROJECT_DIR$/src/LinearGrammarFromFile.java" />
+      </list>
+    </option>
+  </component>
+  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+    <sorting>DEFINITION_ORDER</sorting>
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectFrameBounds">
+    <option name="x" value="681" />
+    <option name="y" value="145" />
+    <option name="width" value="1783" />
+    <option name="height" value="1059" />
+  </component>
+  <component name="ProjectId" id="2EThx4yWLDQOb2PLSOMS9tFrMTT" />
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
+      <pane id="AndroidView" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="cykparsing" type="b2602c69:ProjectViewProjectNode" />
+              <item name="cykparsing" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="cykparsing" type="b2602c69:ProjectViewProjectNode" />
+              <item name="cykparsing" type="462c0819:PsiDirectoryNode" />
+              <item name="grammars" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="cykparsing" type="b2602c69:ProjectViewProjectNode" />
+              <item name="cykparsing" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+    </panes>
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1665322223233" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="project.structure.last.edited" value="Artifacts" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.CNFMain BU_EC wbp">
+    <configuration name="CNFMain BU" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="CNFMain" />
+      <module name="cykparsing" />
+      <option name="PROGRAM_PARAMETERS" value="well_balanced_parenthesis.txt wbpstrings.txt BU 10" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CNFMain BU_EC stupid" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="CNFMain" />
+      <module name="cykparsing" />
+      <option name="PROGRAM_PARAMETERS" value="stupid.txt strings.txt BU_EC 10" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CNFMain BU_EC wbp" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="CNFMain" />
+      <module name="cykparsing" />
+      <option name="PROGRAM_PARAMETERS" value="well_balanced_parenthesis.txt wbpstrings.txt BU_EC 10" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CNFMain BU_EC_S wbp" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="CNFMain" />
+      <module name="cykparsing" />
+      <option name="PROGRAM_PARAMETERS" value="well_balanced_parenthesis.txt wbpstrings.txt BU_EC_S 10" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CNFMain N" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="CNFMain" />
+      <module name="cykparsing" />
+      <option name="PROGRAM_PARAMETERS" value="well_balanced_parenthesis.txt wbpstrings.txt N 10" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CNFMain TD" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="CNFMain" />
+      <module name="cykparsing" />
+      <option name="PROGRAM_PARAMETERS" value="well_balanced_parenthesis.txt wbpstrings.txt TD 10" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="LinearMain BU_C" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="LinearMain" />
+      <module name="cykparsing" />
+      <option name="PROGRAM_PARAMETERS" value="linear_grammar.txt linear_input_strings.txt BU_C 10" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="LinearMain N_C" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="LinearMain" />
+      <module name="cykparsing" />
+      <option name="PROGRAM_PARAMETERS" value="linear_grammar.txt linear_input_strings.txt N_C 10" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="LinearMain TD_C" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="LinearMain" />
+      <module name="cykparsing" />
+      <option name="PROGRAM_PARAMETERS" value="linear_grammar.txt linear_input_strings.txt TD_C 10" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="LinearMain TD_C" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="LinearMain" />
+      <module name="cykparsing" />
+      <option name="PROGRAM_PARAMETERS" value="linear_grammar.txt linear_input_strings.txt TD 10" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="LinearMain TD_L" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="LinearMain" />
+      <module name="cykparsing" />
+      <option name="PROGRAM_PARAMETERS" value="linear_grammar.txt linear_input_strings.txt TD_L 10" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Old main" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="OldMain" />
+      <module name="cykparsing" />
+      <option name="PROGRAM_PARAMETERS" value="2 2" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="cykparsing.jar" type="JarApplication">
+      <option name="JAR_PATH" value="$PROJECT_DIR$/out/artifacts/cykparsing_jar/cykparsing.jar" />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Application.Old main" />
+      <item itemvalue="Application.CNFMain TD" />
+      <item itemvalue="Application.CNFMain BU" />
+      <item itemvalue="Application.CNFMain N" />
+      <item itemvalue="Application.CNFMain BU_EC wbp" />
+      <item itemvalue="Application.CNFMain BU_EC_S wbp" />
+      <item itemvalue="Application.CNFMain BU_EC stupid" />
+      <item itemvalue="Application.LinearMain TD_L" />
+      <item itemvalue="Application.LinearMain TD_C" />
+      <item itemvalue="Application.LinearMain BU_C" />
+      <item itemvalue="Application.LinearMain N_C" />
+      <item itemvalue="JAR Application.cykparsing.jar" />
+    </list>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="8a03a729-3bbf-419e-becb-160a55980816" name="Default Changelist" comment="" />
+      <created>1662368394819</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1662368394819</updated>
+      <workItem from="1662368397481" duration="2473000" />
+      <workItem from="1662625734240" duration="2471000" />
+      <workItem from="1662633861435" duration="8670000" />
+      <workItem from="1663149545259" duration="15446000" />
+      <workItem from="1663670741817" duration="921000" />
+      <workItem from="1663838539878" duration="1582000" />
+      <workItem from="1665310078783" duration="10044000" />
+      <workItem from="1665322264341" duration="4057000" />
+      <workItem from="1665384864755" duration="11790000" />
+      <workItem from="1665404911478" duration="3016000" />
+      <workItem from="1665408533140" duration="23000" />
+      <workItem from="1665408642300" duration="5174000" />
+      <workItem from="1665487648551" duration="4740000" />
+      <workItem from="1665501011737" duration="5921000" />
+      <workItem from="1665506967660" duration="110000" />
+      <workItem from="1665567147320" duration="2273000" />
+      <workItem from="1665571461546" duration="58000" />
+      <workItem from="1665571612150" duration="35000" />
+      <workItem from="1665571655993" duration="45000" />
+      <workItem from="1665571714590" duration="3255000" />
+      <workItem from="1665579964863" duration="4885000" />
+      <workItem from="1665648756299" duration="944000" />
+      <workItem from="1666092232955" duration="212000" />
+      <workItem from="1666092462158" duration="8623000" />
+    </task>
+    <task id="LOCAL-00001" summary="komit">
+      <created>1662370828132</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1662370828132</updated>
+    </task>
+    <task id="LOCAL-00002" summary="komit">
+      <created>1662631600905</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1662631600905</updated>
+    </task>
+    <task id="LOCAL-00003" summary="komit">
+      <created>1662643164379</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1662643164379</updated>
+    </task>
+    <task id="LOCAL-00004" summary="komit">
+      <created>1663165707214</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1663165707214</updated>
+    </task>
+    <task id="LOCAL-00005" summary="komit">
+      <created>1663844756557</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1663844756557</updated>
+    </task>
+    <task id="LOCAL-00006" summary="komit">
+      <created>1665326311665</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1665326311665</updated>
+    </task>
+    <task id="LOCAL-00007" summary="komit">
+      <created>1665396737577</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1665396737577</updated>
+    </task>
+    <task id="LOCAL-00008" summary="komit">
+      <created>1665414042167</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1665414042168</updated>
+    </task>
+    <task id="LOCAL-00009" summary="komit">
+      <created>1665494952512</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1665494952512</updated>
+    </task>
+    <task id="LOCAL-00010" summary="komit">
+      <created>1665506879557</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1665506879557</updated>
+    </task>
+    <task id="LOCAL-00011" summary="komit">
+      <created>1665506920871</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1665506920871</updated>
+    </task>
+    <task id="LOCAL-00012" summary="komit">
+      <created>1665585018434</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1665585018434</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="13122000" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="681" y="145" width="1783" height="1059" extended-state="0" />
+    <layout>
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.26079446" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Image Layers" order="2" />
+      <window_info id="Designer" order="3" />
+      <window_info id="UI Designer" order="4" />
+      <window_info id="Capture Tool" order="5" />
+      <window_info id="Favorites" order="6" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" visible="true" weight="0.45602605" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.32941177" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Version Control" order="7" weight="0.002352941" />
+      <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Terminal" order="9" />
+      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
+      <window_info anchor="bottom" id="Messages" order="11" weight="0.16784313" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Palette" order="3" />
+      <window_info anchor="right" id="Capture Analysis" order="4" />
+      <window_info anchor="right" id="Database" order="5" />
+      <window_info anchor="right" id="Theme Preview" order="6" />
+      <window_info anchor="right" id="Palette&#9;" order="7" />
+      <window_info anchor="right" id="Maven Projects" order="8" />
+    </layout>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="komit" />
+    <option name="LAST_COMMIT_MESSAGE" value="komit" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/LinearGrammarFromFile.java</url>
+          <line>55</line>
+          <option name="timeStamp" value="33" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/LinearMain.java</url>
+          <line>124</line>
+          <option name="timeStamp" value="41" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/LinearMain.java</url>
+          <line>100</line>
+          <option name="timeStamp" value="42" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/LinearMain.java</url>
+          <line>121</line>
+          <option name="timeStamp" value="43" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Parser.java</url>
+          <line>199</line>
+          <option name="timeStamp" value="45" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+    <pin-to-top-manager>
+      <pinned-members>
+        <PinnedItemInfo parentTag="GrammarFromFile" memberName="nFromT" />
+        <PinnedItemInfo parentTag="GrammarFromFile" memberName="NTIndex" />
+        <PinnedItemInfo parentTag="Parser" memberName="nFromT" />
+        <PinnedItemInfo parentTag="java.util.HashMap$Node" memberName="value" />
+        <PinnedItemInfo parentTag="GrammarFromFile" memberName="nonTerminalsToNonTerminal" />
+      </pinned-members>
+    </pin-to-top-manager>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/cykparsing$Unnamed.ic" NAME="Unnamed Coverage Results" MODIFIED="1665572524494" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/grammars/well_balanced_parenthesis.txt" />
+    <entry file="file://$PROJECT_DIR$/src/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="21" column="9" lean-forward="true" selection-start-line="21" selection-start-column="9" selection-end-line="21" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/linear_grammar.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret line="6" selection-start-line="6" selection-end-line="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/linear_input_strings.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret line="1" column="18" selection-start-line="1" selection-start-column="18" selection-end-line="1" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Grammar.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret selection-end-line="14" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/LinearGrammar.java" />
+    <entry file="file://$PROJECT_DIR$/src/GrammarFromFile.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-219">
+          <caret line="44" column="47" lean-forward="true" selection-start-line="44" selection-start-column="47" selection-end-line="44" selection-end-column="47" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/LinearGrammarFromFile.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="13" column="28" lean-forward="true" selection-start-line="13" selection-start-column="28" selection-end-line="13" selection-end-column="28" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#2227#2228#0" expanded="true" />
+            <element signature="e#2258#2259#0" expanded="true" />
+            <element signature="e#2300#2301#0" expanded="true" />
+            <element signature="e#2335#2336#0" expanded="true" />
+            <element signature="e#2378#2379#0" expanded="true" />
+            <element signature="e#2414#2415#0" expanded="true" />
+            <element signature="e#2461#2462#0" expanded="true" />
+            <element signature="e#2493#2494#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Parser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="815">
+          <caret line="103" column="9" lean-forward="true" selection-start-line="103" selection-start-column="9" selection-end-line="103" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ArtifactsStructureConfigurable.UI">
+        <settings>
+          <artifact-editor />
+          <last-edited>cykparsing:jar</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+                <option value="0.5" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="FacetStructureConfigurable.UI">
+        <settings>
+          <last-edited>No facets are configured</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="GlobalLibrariesConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="JdkListConfigurable.UI">
+        <settings>
+          <last-edited>11</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ModuleStructureConfigurable.UI">
+        <settings>
+          <last-edited>cykparsing</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+                <option value="0.6" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectLibrariesConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
+  </component>
+</project>

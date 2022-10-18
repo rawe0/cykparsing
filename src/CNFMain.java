@@ -80,7 +80,10 @@ public class CNFMain {
                     parser.parseNaive(testStrings[l]);
                     break;
                 case "BU_EC":
-                    parser.parseBUErrorCorrection(testStrings[l]);
+                    parser.parseBUErrorCorrection(testStrings[l], false);
+                    break;
+                case "BU_EC_S":
+                    parser.parseBUErrorCorrection(testStrings[l], true);
                     break;
             }
 
@@ -105,7 +108,10 @@ public class CNFMain {
                         parser.parseNaive(testStrings[l]);
                         break;
                     case "BU_EC":
-                        parser.parseBUErrorCorrection(testStrings[l]);
+                        parser.parseBUErrorCorrection(testStrings[l], false);
+                        break;
+                    case "BU_EC_S":
+                        parser.parseBUErrorCorrection(testStrings[l], true);
                         break;
                 }
 
