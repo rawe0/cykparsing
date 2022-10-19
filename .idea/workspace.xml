@@ -7,17 +7,10 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8a03a729-3bbf-419e-becb-160a55980816" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wbpstrings.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/cykparsing_jar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/CNFParser.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/cykparsing_jar2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/LinearParser.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/CNFMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/CNFMain.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/LinearMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/LinearMain.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/LinearParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/LinearParser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Parser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/string_generator.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test_runner.sh" beforeDir="false" afterPath="$PROJECT_DIR$/test_runner.sh" afterDir="false" />
+    <list default="true" id="eaeab444-b02f-4efd-a033-930c6f472b52" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/LinearParser.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/META-INF/MANIFEST.MF" beforeDir="false" afterPath="$PROJECT_DIR$/grammars/META-INF/MANIFEST.MF" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,13 +43,15 @@
     </file-type-list>
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/test_runner.sh" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/LinearGrammarFromFile.java" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/GrammarFromFile.java" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/Parser.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/cykparsing.iml" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/grammars/access.txt" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/linear_grammar.txt" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/linear_input_strings.txt" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/GrammarFromFile.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/LinearGrammarFromFile.java" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/LinearParser.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Parser.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/test_runner.sh" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -122,23 +117,30 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">
-    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1665322223233" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="project.structure.last.edited" value="Artifacts" />
-    <property name="project.structure.proportion" value="0.15" />
-    <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
-  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "last_opened_file_path": "C:/Users/rasmu/IdeaProjects/cykparsing/out/artifacts/CNFParser/cykparsing.jar",
+    "project.structure.last.edited": "Artifacts",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2"
+  }
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\rasmu\IdeaProjects\cykparsing" />
       <recent name="$PROJECT_DIR$" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.CNFMain BU_EC wbp">
+  <component name="RunManager" selected="JAR Application.CNFParser">
+    <configuration name="CNFMain BU (1)" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="CNFMain" />
+      <module name="cykparsing" />
+      <option name="PROGRAM_PARAMETERS" value="well_balanced_parenthesis.txt RLR BU 10" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="CNFMain BU" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="CNFMain" />
       <module name="cykparsing" />
@@ -235,14 +237,25 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="cykparsing.jar" type="JarApplication">
-      <option name="JAR_PATH" value="$PROJECT_DIR$/out/artifacts/cykparsing_jar/cykparsing.jar" />
+    <configuration name="CNFParser" type="JarApplication">
+      <option name="JAR_PATH" value="$PROJECT_DIR$/out/artifacts/CNFParser/cykparsing.jar" />
+      <option name="PROGRAM_PARAMETERS" value="build/grammars/well_balanced_parenthesis.txt build/strings/LR BU 10" />
+      <option name="WORKING_DIRECTORY" value="C:\Users\rasmu\IdeaProjects\cykparsing" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <method v="2" />
+    </configuration>
+    <configuration name="LinearParser" type="JarApplication">
+      <option name="JAR_PATH" value="$PROJECT_DIR$/out/artifacts/LinearParser/cykparsing.jar" />
+      <option name="PROGRAM_PARAMETERS" value="build/grammars/linear_grammar.txt build/strings/AA_B_CC TD_L 10" />
+      <option name="WORKING_DIRECTORY" value="C:\Users\rasmu\IdeaProjects\cykparsing" />
+      <option name="ALTERNATIVE_JRE_PATH" />
       <method v="2" />
     </configuration>
     <list>
       <item itemvalue="Application.Old main" />
       <item itemvalue="Application.CNFMain TD" />
       <item itemvalue="Application.CNFMain BU" />
+      <item itemvalue="Application.CNFMain BU (1)" />
       <item itemvalue="Application.CNFMain N" />
       <item itemvalue="Application.CNFMain BU_EC wbp" />
       <item itemvalue="Application.CNFMain BU_EC_S wbp" />
@@ -251,7 +264,8 @@
       <item itemvalue="Application.LinearMain TD_C" />
       <item itemvalue="Application.LinearMain BU_C" />
       <item itemvalue="Application.LinearMain N_C" />
-      <item itemvalue="JAR Application.cykparsing.jar" />
+      <item itemvalue="JAR Application.CNFParser" />
+      <item itemvalue="JAR Application.LinearParser" />
     </list>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -452,6 +466,7 @@
     </breakpoint-manager>
     <pin-to-top-manager>
       <pinned-members>
+        <PinnedItemInfo parentTag="java.util.HashMap$Node" memberName="key" />
         <PinnedItemInfo parentTag="GrammarFromFile" memberName="nFromT" />
         <PinnedItemInfo parentTag="GrammarFromFile" memberName="NTIndex" />
         <PinnedItemInfo parentTag="Parser" memberName="nFromT" />
