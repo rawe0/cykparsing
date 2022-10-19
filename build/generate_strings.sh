@@ -1,5 +1,5 @@
 #!/bin/bash
-set -x
+#set -x
 
 # File names 
 file_names_CNF=(
@@ -10,9 +10,7 @@ file_names_CNF=(
     "LRL" 
     "SG");
 
-TD_BU_N=$(50)
-N_N=$(4)
-LINEAR_N=$(24)
+
 # Arguments corresponding to a file name
 args_CNF=(
     "( ) ) -p f" 
@@ -36,12 +34,12 @@ do
     rm -rf "strings/${file_name}";
     for j in $(seq 1 60);
     do
-        python3 string_generator.py -s $arg -l $((j*$TD_BU_N)) >> "strings/${file_name}";
+        python3 string_generator.py -s $arg -l $((j*50)) >> "strings/${file_name}";
     done
 done
 
 # Generate all the strings for naive
-for i in $(seq 0 4);
+for i in $(seq 0 5);
 do
     file_name=${file_names_CNF[${i}]};
     arg=${args_CNF[${i}]};
@@ -49,7 +47,7 @@ do
     rm -rf "strings/${file_name}_N"
     for j in $(seq 1 5);
     do
-        python3 string_generator.py -s $arg -l $((j*${N_N})) >> "strings/${file_name}_N";
+        python3 string_generator.py -s $arg -l $((j*4)) >> "strings/${file_name}_N";
     done
 done
 

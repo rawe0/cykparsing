@@ -1,5 +1,5 @@
 #!/bin/bash
-#set -x
+set -x
 
 generate_strings=$1
 bottom_up=$2
@@ -7,13 +7,13 @@ top_down=$3
 naive=$4
 error_correction=$5
 linear=$6
-nr_runs=$6
+nr_runs=$7
 
 
 
 if [ $generate_strings = "t" ]
 then
-    generate_strings.sh    
+    /bin/bash generate_strings.sh    
 else
     echo "Skipping generating strings"
 fi
@@ -54,7 +54,7 @@ then
     for file in ${WBP_names[@]}
     do
         echo $file
-        java -jar -XX:CompileThreshold=1 ../out/artifacts/CNFParser/cykparsing.jar grammars/well_balanced_parenthesis.txt "strings/${file}" BU $nr_runs > "out/BU_$file.csv" 
+        java -jar -XX:CompileThreshold=1 ../out/artifacts/CNFParser/cykparsing.jar grammars/well_balanced_parenthesis.txt strings/${file} BU $nr_runs #> "out/BU_$file.csv" 
     done
 
     # Run BU tests on SG
@@ -62,7 +62,7 @@ then
     for file in $SG_names
     do
         echo $file
-        java -jar -XX:CompileThreshold=1 ../out/artifacts/CNFParser/cykparsing.jar grammars/stupid.txt "strings/${file}" BU $nr_runs > "out/BU_$file.csv"
+        java -jar -XX:CompileThreshold=1 ../out/artifacts/CNFParser/cykparsing.jar grammars/stupid.txt strings/${file} BU $nr_runs #> "out/BU_$file.csv"
     done
 else
     echo "Skipping bottom up"
@@ -78,7 +78,7 @@ then
     for file in ${WBP_names[@]}
     do
         echo $file
-        java -jar -XX:CompileThreshold=1 ../out/artifacts/CNFParser/cykparsing.jar grammars/well_balanced_parenthesis.txt "strings/${file}" TD $nr_runs > "out/TD_$file.csv"
+        java -jar -XX:CompileThreshold=1 ../out/artifacts/CNFParser/cykparsing.jar grammars/well_balanced_parenthesis.txt strings/${file} TD $nr_runs #> "out/TD_$file.csv"
     done
 
     # Run top down tests on SG
@@ -86,7 +86,7 @@ then
     for file in $SG_names
     do
         echo $file
-        java -jar -XX:CompileThreshold=1 ../out/artifacts/CNFParser/cykparsing.jar grammars/stupid.txt "strings/${file}" TD $nr_runs > "out/TD_$file.csv" 
+        java -jar -XX:CompileThreshold=1 ../out/artifacts/CNFParser/cykparsing.jar grammars/stupid.txt strings/${file} TD $nr_runs #> "out/TD_$file.csv" 
     done
 else
     echo "Skipping bottom up"
@@ -102,7 +102,7 @@ then
     for file in ${WBP_names[@]}
     do
         echo $file
-        java -jar -XX:CompileThreshold=1 ../out/artifacts/CNFParser/cykparsing.jar grammars/well_balanced_parenthesis.txt "strings/${file}"_N N $nr_runs > "out/N_$file.csv" 
+        java -jar -XX:CompileThreshold=1 ../out/artifacts/CNFParser/cykparsing.jar grammars/well_balanced_parenthesis.txt strings/${file}_N N $nr_runs #> "out/N_$file.csv" 
     done
 
     # Run naive tests on SG
@@ -110,7 +110,7 @@ then
     for file in $SG_names
     do
         echo $file
-        java -jar -XX:CompileThreshold=1 ../out/artifacts/CNFParser/cykparsing.jar grammars/stupid.txt "strings/${file}"_N N $nr_runs > "out/N_$file.csv" 
+        java -jar -XX:CompileThreshold=1 ../out/artifacts/CNFParser/cykparsing.jar grammars/stupid.txt strings/${file}_N N $nr_runs #> "out/N_$file.csv" 
     done
 else
     echo "Skipping naive"
@@ -119,14 +119,14 @@ fi
 ##########################
 ## Error Correction
 ##########################
-if [$error_correction = "t"]
+if [ $error_correction = "t" ]
 then
     # Run BU_EC tests on WBP grammar
     echo "Running BU_EC tests on WBP grammar"
     for file in ${EC_names[@]}
     do
         echo $file
-        java -jar -XX:CompileThreshold=1 ../out/artifacts/CNFParser/cykparsing.jar grammars/well_balanced_parenthesis.txt "strings/${file}" BU_EC_S $nr_runs > "out/BU_EC_S$file.csv"
+        java -jar -XX:CompileThreshold=1 ../out/artifacts/CNFParser/cykparsing.jar grammars/well_balanced_parenthesis.txt strings/${file} BU_EC_S $nr_runs #> "out/BU_EC_S_$file.csv"
     done
 
 else
@@ -143,13 +143,13 @@ then
     for file in ${linear_names[@]}
     do
         echo $file
-        java -jar -XX:CompileThreshold=1 ../out/artifacts/LinearParser/cykparsing.jar grammars/linear_grammar.txt "strings/${file}" TD_L $nr_runs > "out/TD_L_$file.csv" 
+        java -jar -XX:CompileThreshold=1 ../out/artifacts/LinearParser/cykparsing.jar grammars/linear_grammar.txt strings/${file} TD_L $nr_runs #> "out/TD_L_$file.csv" 
     done
     for file in ${linear_names[@]}
     do
         echo $file
-        java -jar -XX:CompileThreshold=1 ../out/artifacts/LinearParser/cykparsing.jar grammars/linear_grammar.txt "strings/${file}" TD_C $nr_runs > "out/TD_C_$file.csv" 
+        java -jar -XX:CompileThreshold=1 ../out/artifacts/LinearParser/cykparsing.jar grammars/linear_grammar.txt strings/${file} TD_C $nr_runs #> "out/TD_C_$file.csv" 
     done
 else
-    echo "Skipping naive"
+    echo "Skipping linear"
 fi
